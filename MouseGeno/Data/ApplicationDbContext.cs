@@ -22,5 +22,29 @@ namespace MouseGeno.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<MouseGeno.Models.Cage> Cage { get; set; }
+
+        public DbSet<MouseGeno.Models.Condition> Condition { get; set; }
+
+        public DbSet<MouseGeno.Models.GenoType> GenoType { get; set; }
+
+        public DbSet<MouseGeno.Models.HealthStatus> HealthStatus { get; set; }
+
+        public DbSet<MouseGeno.Models.Line> Line { get; set; }
+
+        public DbSet<MouseGeno.Models.Mouse> Mouse { get; set; }
+
+        public DbSet<MouseGeno.Models.TaskType> TaskType { get; set; }
+
+        public DbSet<MouseGeno.Models.CageCondition> CageCondition { get; set; }
+
+        public DbSet<MouseGeno.Models.LineGenoType> LineGenoType { get; set; }
+
+        public DbSet<MouseGeno.Models.MouseCage> MouseCage { get; set; }
+
+        public DbSet<MouseGeno.Models.MouseHealthStatus> MouseHealthStatus { get; set; }
+
+        public DbSet<MouseGeno.Models.MouseTask> MouseTask { get; set; }
     }
 }

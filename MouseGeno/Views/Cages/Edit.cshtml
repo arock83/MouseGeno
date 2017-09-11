@@ -1,0 +1,46 @@
+﻿@model MouseGeno.Models.Cage
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Cage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CageID" />
+            <div class="form-group">
+                <label asp-for="CageNumber" class="control-label"></label>
+                <input asp-for="CageNumber" class="form-control" />
+                <span asp-validation-for="CageNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cubicle" class="control-label"></label>
+                <input asp-for="Cubicle" class="form-control" />
+                <span asp-validation-for="Cubicle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Breeding" /> @Html.DisplayNameFor(model => model.Breeding)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

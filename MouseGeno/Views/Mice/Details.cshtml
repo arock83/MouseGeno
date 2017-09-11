@@ -1,0 +1,72 @@
+﻿@model MouseGeno.Models.Mouse
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mouse</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EarTag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EarTag)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ToeClip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ToeClip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Death)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Death)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MomID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MomID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DadID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DadID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GenoType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GenoType.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Line)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Line.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MouseID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
