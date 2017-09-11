@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MouseGeno.Models.Cage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CageNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cubicle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Breeding)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CageNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cubicle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Breeding)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CageID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CageID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CageID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

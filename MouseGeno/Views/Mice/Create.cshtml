@@ -1,0 +1,71 @@
+﻿@model MouseGeno.Models.Mouse
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Mouse</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EarTag" class="control-label"></label>
+                <input asp-for="EarTag" class="form-control" />
+                <span asp-validation-for="EarTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToeClip" class="control-label"></label>
+                <input asp-for="ToeClip" class="form-control" />
+                <span asp-validation-for="ToeClip" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sex" class="control-label"></label>
+                <input asp-for="Sex" class="form-control" />
+                <span asp-validation-for="Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birth" class="control-label"></label>
+                <input asp-for="Birth" class="form-control" />
+                <span asp-validation-for="Birth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Death" class="control-label"></label>
+                <input asp-for="Death" class="form-control" />
+                <span asp-validation-for="Death" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenoTypeID" class="control-label"></label>
+                <select asp-for="GenoTypeID" class ="form-control" asp-items="ViewBag.GenoTypeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LineID" class="control-label"></label>
+                <select asp-for="LineID" class ="form-control" asp-items="ViewBag.LineID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MomID" class="control-label"></label>
+                <input asp-for="MomID" class="form-control" />
+                <span asp-validation-for="MomID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DadID" class="control-label"></label>
+                <input asp-for="DadID" class="form-control" />
+                <span asp-validation-for="DadID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

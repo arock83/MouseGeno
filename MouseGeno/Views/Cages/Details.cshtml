@@ -1,0 +1,36 @@
+﻿@model MouseGeno.Models.Cage
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CageNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CageNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cubicle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cubicle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Breeding)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Breeding)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CageID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
