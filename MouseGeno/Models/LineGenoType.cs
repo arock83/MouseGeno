@@ -14,11 +14,11 @@ namespace MouseGeno.Models
         [Required]
         public int LineID { get; set; }
 
-        public Line Line { get; set; }
+        public virtual Line Line { get; set; }
 
         [Required]
         public int GenoTypeID { get; set; }
 
-        public GenoType GenoType { get; set; }
+        public virtual GenoType GenoType { get; set; }
     }
 }

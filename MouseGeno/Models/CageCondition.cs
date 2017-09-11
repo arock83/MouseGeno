@@ -14,13 +14,14 @@ namespace MouseGeno.Models
         [Required]
         public int CageID { get; set; }
 
-        public Cage Cage { get; set; }
+        public virtual Cage Cage { get; set; }
 
         [Required]
         public int ConditionID { get; set; }
 
-        public Condition Condition { get; set; }
+        public virtual Condition Condition { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public ApplicationUser User {get; set;}

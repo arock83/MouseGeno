@@ -12,14 +12,14 @@ namespace MouseGeno.Models
         public int CageID { get; set; }
 
         [Required]
-        
+        [StringLength(5)]
         public string CageNumber { get; set; }
 
-        [Required]
-        public string WaterSupply { get; set; }
+        [StringLength(3)]
+        public string Cubicle { get; set; }
 
         [Required]
-        public string FoodSupply { get; set; }
+        public bool Breeding { get; set; }
 
         public virtual ICollection<MouseCage> MouseCages { get; set; }
 

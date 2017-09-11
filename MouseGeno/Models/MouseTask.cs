@@ -14,15 +14,16 @@ namespace MouseGeno.Models
         [Required]
         public int TaskTypeID { get; set; }
 
-        public TaskType TaskType { get; set; }
+        public virtual TaskType TaskType { get; set; }
 
         [Required]
         public int MouseID { get; set; }
 
-        public Mouse Mouse { get; set; }
+        public virtual Mouse Mouse { get; set; }
 
         public ApplicationUser User { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public string Data { get; set; }
