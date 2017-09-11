@@ -6,22 +6,16 @@ using System.Threading.Tasks;
 
 namespace MouseGeno.Models
 {
-    public class TaskType
+    public class HealthStatus
     {
         [Key]
-        public int TaskTypeID { get; set; }
+        public int HealthStatusID { get; set; }
 
         [Required]
         [StringLength(20)]
         public string Name { get; set; }
 
-        [Required]
         [StringLength(155)]
-        public string Instructions { get; set; }
-
-        [StringLength(8)]
-        public string MeasurementType { get; set; }
-
-
+        public string Description { get; set; }
     }
 }

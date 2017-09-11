@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MouseGeno.Models
 {
-    public class MouseCage
+    public class MouseHealthStatus
     {
         [Key]
-        public int MouseCageID { get; set; }
+        public int MouseHealthStatusID { get; set; }
 
         [Required]
         public int MouseID { get; set; }
@@ -17,9 +17,9 @@ namespace MouseGeno.Models
         public virtual Mouse Mouse { get; set; }
 
         [Required]
-        public int CageID { get; set; }
+        public int HealthStatusID { get; set; }
 
-        public virtual Cage Cage { get; set; }
+        public virtual HealthStatus HealthStatus { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -27,5 +27,8 @@ namespace MouseGeno.Models
 
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
+
+
+
     }
 }

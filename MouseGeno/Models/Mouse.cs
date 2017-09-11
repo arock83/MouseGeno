@@ -18,18 +18,20 @@ namespace MouseGeno.Models
         [Required]
         public string Sex { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Death { get; set; }
 
         public int GenoTypeID { get; set; }
 
-        public GenoType GenoType { get; set; }
+        public virtual GenoType GenoType { get; set; }
 
         [Required]
         public int LineID { get; set; }
 
-        public Line Line { get; set; }
+        public virtual Line Line { get; set; }
 
         public int MomID { get; set; }
 
@@ -38,6 +40,9 @@ namespace MouseGeno.Models
         public virtual ICollection<MouseCage> MouseCages { get; set; }
 
         public virtual ICollection<MouseTask> MouseTasks { get; set; }
+
+        public virtual ICollection<MouseHealthStatus> MouseHealthStatuses { get; set; }
+
 
 
     }
