@@ -12,7 +12,7 @@ namespace MouseGeno.Models
         public int LineID { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(24)]
         public string Name { get; set; }
 
         [Required]

@@ -57,7 +57,7 @@ namespace MouseGeno.Migrations
                     CageID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Breeding = table.Column<bool>(type: "bit", nullable: false),
-                    CageNumber = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    CageNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Cubicle = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: true)
                 },
                 constraints: table =>
@@ -72,7 +72,7 @@ namespace MouseGeno.Migrations
                     ConditionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Instructions = table.Column<string>(type: "nvarchar(155)", maxLength: 155, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +114,7 @@ namespace MouseGeno.Migrations
                     LineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(type: "nvarchar(155)", maxLength: 155, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false)
                 },
                 constraints: table =>
                 {

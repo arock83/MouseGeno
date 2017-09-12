@@ -40,6 +40,51 @@ namespace MouseGeno
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred seeding Breeding Cages in the Cage Table.");
                 }
+                try
+                {
+                    TaskTypeSeed.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the TaskType Table.");
+                }
+                try
+                {
+                    ConditionSeed.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the Condition Table.");
+                }
+                try
+                {
+                    LineSeed.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the Line Table.");
+                }
+                try
+                {
+                    HealthStatusSeed.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the HealthStatus Table.");
+                }
+                try
+                {
+                    StandardCageSeed.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding Standard Cages in the Cage Table.");
+                }
 
             }
 

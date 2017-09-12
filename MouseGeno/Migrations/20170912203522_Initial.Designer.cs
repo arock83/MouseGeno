@@ -11,7 +11,7 @@ using System;
 namespace MouseGeno.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170912182608_Initial")]
+    [Migration("20170912203522_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,7 +197,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("CageNumber")
                         .IsRequired()
-                        .HasMaxLength(5);
+                        .HasMaxLength(8);
 
                     b.Property<string>("Cubicle")
                         .HasMaxLength(3);
@@ -244,7 +244,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(30);
 
                     b.HasKey("ConditionID");
 
@@ -297,7 +297,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(24);
 
                     b.HasKey("LineID");
 

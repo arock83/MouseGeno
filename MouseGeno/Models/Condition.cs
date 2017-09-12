@@ -12,7 +12,7 @@ namespace MouseGeno.Models
         public int ConditionID { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(30)]
         public string Name { get; set; }
 
         [Required]

@@ -196,7 +196,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("CageNumber")
                         .IsRequired()
-                        .HasMaxLength(5);
+                        .HasMaxLength(8);
 
                     b.Property<string>("Cubicle")
                         .HasMaxLength(3);
@@ -243,7 +243,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(30);
 
                     b.HasKey("ConditionID");
 
@@ -296,7 +296,7 @@ namespace MouseGeno.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(24);
 
                     b.HasKey("LineID");
 
