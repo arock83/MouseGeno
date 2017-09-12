@@ -12,7 +12,7 @@ namespace MouseGeno.Models
         public int CageID { get; set; }
 
         [Required]
-        [StringLength(5)]
+        [StringLength(8)]
         public string CageNumber { get; set; }
 
         [StringLength(3)]
