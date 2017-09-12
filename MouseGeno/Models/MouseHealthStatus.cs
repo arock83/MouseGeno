@@ -28,7 +28,7 @@ namespace MouseGeno.Models
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
-
+        public ApplicationUser User { get; set; }
 
     }
 }

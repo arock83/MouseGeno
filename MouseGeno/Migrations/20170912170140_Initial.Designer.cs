@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using MouseGeno.Data;
 using System;
 
-namespace MouseGeno.Data.Migrations
+namespace MouseGeno.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170912170140_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,18 +251,43 @@ namespace MouseGeno.Data.Migrations
                     b.ToTable("Condition");
                 });
 
+            modelBuilder.Entity("MouseGeno.Models.GeneExpression", b =>
+                {
+                    b.Property<int>("GeneExpressionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("ShortHand")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.HasKey("GeneExpressionID");
+
+                    b.ToTable("GeneExpression");
+                });
+
             modelBuilder.Entity("MouseGeno.Models.GenoType", b =>
                 {
                     b.Property<int>("GenoTypeID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Comments")
+                        .HasMaxLength(155);
 
-                    b.Property<string>("ShortHand")
-                        .IsRequired();
+                    b.Property<int>("PK1ID");
+
+                    b.Property<int>("PK2ID");
+
+                    b.Property<bool>("SynCre");
 
                     b.HasKey("GenoTypeID");
+
+                    b.HasIndex("PK1ID");
+
+                    b.HasIndex("PK2ID");
 
                     b.ToTable("GenoType");
                 });
@@ -299,24 +325,6 @@ namespace MouseGeno.Data.Migrations
                     b.HasKey("LineID");
 
                     b.ToTable("Line");
-                });
-
-            modelBuilder.Entity("MouseGeno.Models.LineGenoType", b =>
-                {
-                    b.Property<int>("LineGenoTypeID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("GenoTypeID");
-
-                    b.Property<int>("LineID");
-
-                    b.HasKey("LineGenoTypeID");
-
-                    b.HasIndex("GenoTypeID");
-
-                    b.HasIndex("LineID");
-
-                    b.ToTable("LineGenoType");
                 });
 
             modelBuilder.Entity("MouseGeno.Models.Mouse", b =>
@@ -379,8 +387,6 @@ namespace MouseGeno.Data.Migrations
                     b.Property<int>("MouseHealthStatusID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<DateTime>("EndDate");
 
                     b.Property<int>("HealthStatusID");
@@ -389,13 +395,15 @@ namespace MouseGeno.Data.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.HasKey("MouseHealthStatusID");
+                    b.Property<string>("UserId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("MouseHealthStatusID");
 
                     b.HasIndex("HealthStatusID");
 
                     b.HasIndex("MouseID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MouseHealthStatus");
                 });
@@ -511,16 +519,16 @@ namespace MouseGeno.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MouseGeno.Models.LineGenoType", b =>
+            modelBuilder.Entity("MouseGeno.Models.GenoType", b =>
                 {
-                    b.HasOne("MouseGeno.Models.GenoType", "GenoType")
-                        .WithMany("LineGenoTypes")
-                        .HasForeignKey("GenoTypeID")
+                    b.HasOne("MouseGeno.Models.GeneExpression", "PK1")
+                        .WithMany("PK1GenoTypes")
+                        .HasForeignKey("PK1ID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MouseGeno.Models.Line", "Line")
-                        .WithMany("LineGenoTypes")
-                        .HasForeignKey("LineID")
+                    b.HasOne("MouseGeno.Models.GeneExpression", "PK2")
+                        .WithMany("PK2GenoTypes")
+                        .HasForeignKey("PK2ID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -552,10 +560,6 @@ namespace MouseGeno.Data.Migrations
 
             modelBuilder.Entity("MouseGeno.Models.MouseHealthStatus", b =>
                 {
-                    b.HasOne("MouseGeno.Models.ApplicationUser")
-                        .WithMany("MouseHealthStatuses")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("MouseGeno.Models.HealthStatus", "HealthStatus")
                         .WithMany()
                         .HasForeignKey("HealthStatusID")
@@ -565,6 +569,10 @@ namespace MouseGeno.Data.Migrations
                         .WithMany("MouseHealthStatuses")
                         .HasForeignKey("MouseID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MouseGeno.Models.ApplicationUser", "User")
+                        .WithMany("MouseHealthStatuses")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MouseGeno.Models.MouseTask", b =>

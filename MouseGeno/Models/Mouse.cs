@@ -43,7 +43,5 @@ namespace MouseGeno.Models
 
         public virtual ICollection<MouseHealthStatus> MouseHealthStatuses { get; set; }
 
-
-
     }
 }

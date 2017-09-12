@@ -24,10 +24,8 @@ namespace MouseGeno.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        public ApplicationUser User {get; set;}
+        public ApplicationUser User { get; set; }
 
         public string Comments { get; set; }
-
-
     }
 }

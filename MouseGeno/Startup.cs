@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MouseGeno.Data;
 using MouseGeno.Models;
 using MouseGeno.Services;
+using MouseGeno.Data.SeedData;
 
 namespace MouseGeno
 {
@@ -63,6 +64,7 @@ namespace MouseGeno
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

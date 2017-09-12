@@ -29,6 +29,5 @@ namespace MouseGeno.Models
         public string Data { get; set; }
 
         public string Comments { get; set; }
-
     }
 }
