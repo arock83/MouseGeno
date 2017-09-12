@@ -33,13 +33,14 @@ namespace MouseGeno
                 }
                 try
                 {
-                    GenoTypeSeed.Initialize(services);
+                    BreedingCageSeed.Initialize(services);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred seeding the GenoType Table.");
+                    logger.LogError(ex, "An error occurred seeding Breeding Cages in the Cage Table.");
                 }
+
             }
 
             host.Run();

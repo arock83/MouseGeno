@@ -21,9 +21,9 @@ namespace MouseGeno.Models
         public string ShortHand { get; set; }
 
         [InverseProperty("PK1")]
-        public virtual ICollection<GenoType> PK1GenoTypes { get; set; }
+        public virtual ICollection<Mouse> PK1GenoTypes { get; set; }
 
         [InverseProperty("PK2")]
-        public virtual ICollection<GenoType> PK2GenoTypes { get; set; }
+        public virtual ICollection<Mouse> PK2GenoTypes { get; set; }
     }
 }

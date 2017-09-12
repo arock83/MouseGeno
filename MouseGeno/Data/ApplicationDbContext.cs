@@ -33,8 +33,6 @@ namespace MouseGeno.Data
 
         public DbSet<GeneExpression> GeneExpression { get; set; }
 
-        public DbSet<GenoType> GenoType { get; set; }
-
         public DbSet<HealthStatus> HealthStatus { get; set; }
 
         public DbSet<Line> Line { get; set; }
