@@ -23,28 +23,30 @@ namespace MouseGeno.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<MouseGeno.Models.Cage> Cage { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
-        public DbSet<MouseGeno.Models.Condition> Condition { get; set; }
+        public DbSet<Cage> Cage { get; set; }
 
-        public DbSet<MouseGeno.Models.GenoType> GenoType { get; set; }
+        public DbSet<CageCondition> CageCondition { get; set; }
 
-        public DbSet<MouseGeno.Models.HealthStatus> HealthStatus { get; set; }
+        public DbSet<Condition> Condition { get; set; }
 
-        public DbSet<MouseGeno.Models.Line> Line { get; set; }
+        public DbSet<GeneExpression> GeneExpression { get; set; }
 
-        public DbSet<MouseGeno.Models.Mouse> Mouse { get; set; }
+        public DbSet<GenoType> GenoType { get; set; }
 
-        public DbSet<MouseGeno.Models.TaskType> TaskType { get; set; }
+        public DbSet<HealthStatus> HealthStatus { get; set; }
 
-        public DbSet<MouseGeno.Models.CageCondition> CageCondition { get; set; }
+        public DbSet<Line> Line { get; set; }
 
-        public DbSet<MouseGeno.Models.LineGenoType> LineGenoType { get; set; }
+        public DbSet<Mouse> Mouse { get; set; }
 
-        public DbSet<MouseGeno.Models.MouseCage> MouseCage { get; set; }
+        public DbSet<MouseCage> MouseCage { get; set; }
 
-        public DbSet<MouseGeno.Models.MouseHealthStatus> MouseHealthStatus { get; set; }
+        public DbSet<MouseHealthStatus> MouseHealthStatus { get; set; }
 
-        public DbSet<MouseGeno.Models.MouseTask> MouseTask { get; set; }
+        public DbSet<MouseTask> MouseTask { get; set; }
+
+        public DbSet<TaskType> TaskType { get; set; }
     }
 }

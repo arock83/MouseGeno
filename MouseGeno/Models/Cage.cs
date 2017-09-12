@@ -23,8 +23,7 @@ namespace MouseGeno.Models
 
         public virtual ICollection<MouseCage> MouseCages { get; set; }
 
-        public virtual ICollection<CageCondition> CageConditions {get; set;}
-
+        public virtual ICollection<CageCondition> CageConditions { get; set; }
 
     }
 }

@@ -21,7 +21,5 @@ namespace MouseGeno.Models
 
         public virtual ICollection<Mouse> Mice { get; set; }
 
-        public virtual ICollection<LineGenoType> LineGenoTypes { get; set; }
-
     }
 }

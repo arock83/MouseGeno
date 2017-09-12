@@ -25,7 +25,5 @@ namespace MouseGeno.Models
         public virtual ICollection<CageCondition> CageConditions { get; set; }
 
         public virtual ICollection<MouseHealthStatus> MouseHealthStatuses { get; set; }
-
-        
     }
 }
