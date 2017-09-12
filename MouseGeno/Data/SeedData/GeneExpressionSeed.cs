@@ -12,7 +12,7 @@ namespace MouseGeno.Data.SeedData
         public static void Initialize(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<ApplicationDbContext>();
-
+            
             if (context.GeneExpression.Any())
             {
                 //user table seeded

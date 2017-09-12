@@ -278,64 +278,44 @@ namespace MouseGeno.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GenoType",
-                columns: table => new
-                {
-                    GenoTypeID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Comments = table.Column<string>(type: "nvarchar(155)", maxLength: 155, nullable: true),
-                    PK1ID = table.Column<int>(type: "int", nullable: false),
-                    PK2ID = table.Column<int>(type: "int", nullable: false),
-                    SynCre = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GenoType", x => x.GenoTypeID);
-                    table.ForeignKey(
-                        name: "FK_GenoType_GeneExpression_PK1ID",
-                        column: x => x.PK1ID,
-                        principalTable: "GeneExpression",
-                        principalColumn: "GeneExpressionID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_GenoType_GeneExpression_PK2ID",
-                        column: x => x.PK2ID,
-                        principalTable: "GeneExpression",
-                        principalColumn: "GeneExpressionID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Mouse",
                 columns: table => new
                 {
                     MouseID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Birth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DadID = table.Column<int>(type: "int", nullable: false),
+                    DadID = table.Column<int>(type: "int", nullable: true),
                     Death = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EarTag = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GenoTypeID = table.Column<int>(type: "int", nullable: false),
                     LineID = table.Column<int>(type: "int", nullable: false),
-                    MomID = table.Column<int>(type: "int", nullable: false),
+                    MomID = table.Column<int>(type: "int", nullable: true),
+                    PK1ID = table.Column<int>(type: "int", nullable: true),
+                    PK2ID = table.Column<int>(type: "int", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SynCre = table.Column<bool>(type: "bit", nullable: false),
                     ToeClip = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Mouse", x => x.MouseID);
                     table.ForeignKey(
-                        name: "FK_Mouse_GenoType_GenoTypeID",
-                        column: x => x.GenoTypeID,
-                        principalTable: "GenoType",
-                        principalColumn: "GenoTypeID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Mouse_Line_LineID",
                         column: x => x.LineID,
                         principalTable: "Line",
                         principalColumn: "LineID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Mouse_GeneExpression_PK1ID",
+                        column: x => x.PK1ID,
+                        principalTable: "GeneExpression",
+                        principalColumn: "GeneExpressionID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Mouse_GeneExpression_PK2ID",
+                        column: x => x.PK2ID,
+                        principalTable: "GeneExpression",
+                        principalColumn: "GeneExpressionID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,24 +472,19 @@ namespace MouseGeno.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GenoType_PK1ID",
-                table: "GenoType",
-                column: "PK1ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GenoType_PK2ID",
-                table: "GenoType",
-                column: "PK2ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Mouse_GenoTypeID",
-                table: "Mouse",
-                column: "GenoTypeID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Mouse_LineID",
                 table: "Mouse",
                 column: "LineID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mouse_PK1ID",
+                table: "Mouse",
+                column: "PK1ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mouse_PK2ID",
+                table: "Mouse",
+                column: "PK2ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MouseCage_CageID",
@@ -601,9 +576,6 @@ namespace MouseGeno.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "GenoType");
 
             migrationBuilder.DropTable(
                 name: "Line");

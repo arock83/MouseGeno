@@ -9,6 +9,5 @@ namespace MouseGeno.Models.ViewModels
     {
         public Line Line { get; set; }
 
-        public ICollection<GenoType> GenoTypes { get; set;}
     }
 }

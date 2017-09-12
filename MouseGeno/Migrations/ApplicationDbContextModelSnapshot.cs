@@ -268,29 +268,6 @@ namespace MouseGeno.Migrations
                     b.ToTable("GeneExpression");
                 });
 
-            modelBuilder.Entity("MouseGeno.Models.GenoType", b =>
-                {
-                    b.Property<int>("GenoTypeID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comments")
-                        .HasMaxLength(155);
-
-                    b.Property<int>("PK1ID");
-
-                    b.Property<int>("PK2ID");
-
-                    b.Property<bool>("SynCre");
-
-                    b.HasKey("GenoTypeID");
-
-                    b.HasIndex("PK1ID");
-
-                    b.HasIndex("PK2ID");
-
-                    b.ToTable("GenoType");
-                });
-
             modelBuilder.Entity("MouseGeno.Models.HealthStatus", b =>
                 {
                     b.Property<int>("HealthStatusID")
@@ -333,28 +310,34 @@ namespace MouseGeno.Migrations
 
                     b.Property<DateTime>("Birth");
 
-                    b.Property<int>("DadID");
+                    b.Property<int?>("DadID");
 
                     b.Property<DateTime>("Death");
 
                     b.Property<string>("EarTag");
 
-                    b.Property<int>("GenoTypeID");
-
                     b.Property<int>("LineID");
 
-                    b.Property<int>("MomID");
+                    b.Property<int?>("MomID");
+
+                    b.Property<int?>("PK1ID");
+
+                    b.Property<int?>("PK2ID");
 
                     b.Property<string>("Sex")
                         .IsRequired();
+
+                    b.Property<bool>("SynCre");
 
                     b.Property<string>("ToeClip");
 
                     b.HasKey("MouseID");
 
-                    b.HasIndex("GenoTypeID");
-
                     b.HasIndex("LineID");
+
+                    b.HasIndex("PK1ID");
+
+                    b.HasIndex("PK2ID");
 
                     b.ToTable("Mouse");
                 });
@@ -518,30 +501,20 @@ namespace MouseGeno.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MouseGeno.Models.GenoType", b =>
-                {
-                    b.HasOne("MouseGeno.Models.GeneExpression", "PK1")
-                        .WithMany("PK1GenoTypes")
-                        .HasForeignKey("PK1ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MouseGeno.Models.GeneExpression", "PK2")
-                        .WithMany("PK2GenoTypes")
-                        .HasForeignKey("PK2ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("MouseGeno.Models.Mouse", b =>
                 {
-                    b.HasOne("MouseGeno.Models.GenoType", "GenoType")
-                        .WithMany("Mice")
-                        .HasForeignKey("GenoTypeID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("MouseGeno.Models.Line", "Line")
                         .WithMany("Mice")
                         .HasForeignKey("LineID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MouseGeno.Models.GeneExpression", "PK1")
+                        .WithMany("PK1GenoTypes")
+                        .HasForeignKey("PK1ID");
+
+                    b.HasOne("MouseGeno.Models.GeneExpression", "PK2")
+                        .WithMany("PK2GenoTypes")
+                        .HasForeignKey("PK2ID");
                 });
 
             modelBuilder.Entity("MouseGeno.Models.MouseCage", b =>
