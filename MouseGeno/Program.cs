@@ -14,7 +14,7 @@ namespace MouseGeno
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main (string[] args)
         {
             var host = BuildWebHost(args);
 
@@ -85,10 +85,24 @@ namespace MouseGeno
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred seeding Standard Cages in the Cage Table.");
                 }
+                try
+                {
+                    UserInitializeAsync(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding Standard Cages in the Cage Table.");
+                }
 
             }
 
             host.Run();
+        }
+
+        public async static void UserInitializeAsync(IServiceProvider services)
+        {
+            await ApplicationUserSeed.Initialize(services);
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

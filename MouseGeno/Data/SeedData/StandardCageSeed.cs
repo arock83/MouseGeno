@@ -15,7 +15,7 @@ namespace MouseGeno.Data.SeedData
 
             if (context.Cage.Any(x => x.Breeding == false))
             {
-                //breeding cages alrady seeded
+                //Standard cages alrady seeded
             }
             else
             {

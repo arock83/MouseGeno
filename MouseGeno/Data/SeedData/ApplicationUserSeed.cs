@@ -4,23 +4,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using MouseGeno.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace MouseGeno.Data.SeedData
 {
     public class ApplicationUserSeed
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public async static Task Initialize(IServiceProvider serviceProvider)
         {
-            var context = serviceProvider.GetService<ApplicationDbContext>();
+            var _context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            if (context.ApplicationUser.Any())
+            //Create the Admin Role
+            if (!_context.Roles.Any(r => r.Name == "Admin"))
             {
-                //Application User Table alrady seeded
+                var role = new IdentityRole { Name = "Admin" };
+                await roleManager.CreateAsync(role);
+                _context.SaveChanges();
             }
-            else
-            {
 
+            if (!_context.Users.Any(u => u.UserName == "Admin"))
+            {
+                await userManager.CreateAsync(
+                 new ApplicationUser
+                 {
+                     UserName = "Admin",
+                     NormalizedUserName = "ADMIN",
+                     Email = "arock83@gmail.com",
+                     NormalizedEmail = "AROCK83@GMAIL.COM",
+                     Name = "Admin",
+                     Initials = "Adm",
+                     EmailConfirmed = true,
+
+                }, "MouseGeno901!");
+                _context.SaveChanges();
+
+                //Code to Add to Admin Role Breaks!!!!
+                //await userManager.AddToRoleAsync(await userManager.FindByNameAsync(userName: "Admin"), "Admin");
+                //_context.SaveChanges();
             }
+
         }
     }
 }

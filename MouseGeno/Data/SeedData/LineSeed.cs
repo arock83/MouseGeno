@@ -15,7 +15,7 @@ namespace MouseGeno.Data.SeedData
 
             if (context.Line.Any())
             {
-                //Task Type table seeded
+                //Line table seeded
             }
             else
             {
