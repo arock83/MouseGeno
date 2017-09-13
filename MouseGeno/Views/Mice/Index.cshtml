@@ -33,11 +33,17 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DadID)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GenoType)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SynCre)
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.Line)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PK1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PK2)
             </th>
             <th></th>
         </tr>
@@ -67,10 +73,16 @@
                 @Html.DisplayFor(modelItem => item.DadID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GenoType.Name)
+                @Html.DisplayFor(modelItem => item.SynCre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Line.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PK1.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PK2.FullName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MouseID">Edit</a> |
