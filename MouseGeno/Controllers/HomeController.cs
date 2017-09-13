@@ -5,14 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MouseGeno.Models;
+using MouseGeno.Models.ViewModels;
+using MouseGeno.Data;
 
 namespace MouseGeno.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            ICollection<Line> allLines = _context.Line.ToList();
+            HomeViewModel model = new HomeViewModel();
+            model.Lines = allLines;
+            return View(model);
         }
 
         public IActionResult About()

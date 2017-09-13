@@ -39,11 +39,6 @@
                 <span asp-validation-for="Death" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GenoTypeID" class="control-label"></label>
-                <select asp-for="GenoTypeID" class="form-control" asp-items="ViewBag.GenoTypeID"></select>
-                <span asp-validation-for="GenoTypeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="LineID" class="control-label"></label>
                 <select asp-for="LineID" class="form-control" asp-items="ViewBag.LineID"></select>
                 <span asp-validation-for="LineID" class="text-danger"></span>
@@ -57,6 +52,23 @@
                 <label asp-for="DadID" class="control-label"></label>
                 <input asp-for="DadID" class="form-control" />
                 <span asp-validation-for="DadID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PK1ID" class="control-label"></label>
+                <select asp-for="PK1ID" class="form-control" asp-items="ViewBag.PK1ID"></select>
+                <span asp-validation-for="PK1ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PK2ID" class="control-label"></label>
+                <select asp-for="PK2ID" class="form-control" asp-items="ViewBag.PK2ID"></select>
+                <span asp-validation-for="PK2ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="SynCre" /> @Html.DisplayNameFor(model => model.SynCre)
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
