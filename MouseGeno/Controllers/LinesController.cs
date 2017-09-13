@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MouseGeno.Data;
 using MouseGeno.Models;
+using MouseGeno.Models.ViewModels;
 
 namespace MouseGeno.Controllers
 {
@@ -35,12 +36,36 @@ namespace MouseGeno.Controllers
 
             var line = await _context.Line
                 .SingleOrDefaultAsync(m => m.LineID == id);
+
+            var miceInLine = _context.Mouse.Where(m => m.LineID == id)
+                .Include(m => m.PK1)
+                .Include(m => m.PK2).ToList();
+
+            var miceCagesInLine = _context.MouseCage.Where(mc => mc.Mouse.LineID == id).ToList();
+
+            var cagesInLine = (
+                from c in _context.Cage
+                from mc in _context.MouseCage
+                from m in _context.Mouse
+                where c.CageID == mc.CageID
+                && mc.MouseID == m.MouseID
+                && m.LineID == id
+                select c
+                ).Distinct().ToList();            
+
             if (line == null)
             {
                 return NotFound();
             }
+            LineDetailsViewModel model = new LineDetailsViewModel
+            {
+                Line = line,
+                Mice = miceInLine,
+                Cages = cagesInLine
 
-            return View(line);
+            };
+
+            return View(model);
         }
 
         // GET: Lines/Create

@@ -50,9 +50,9 @@ namespace MouseGeno.Controllers
         // GET: Mice/Create
         public IActionResult Create()
         {
-            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Description");
-            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName");
-            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName");
+            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Name");
+            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand");
+            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand");
             return View();
         }
 
@@ -61,18 +61,20 @@ namespace MouseGeno.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MouseID,EarTag,ToeClip,Sex,Birth,Death,LineID,MomID,DadID,PK1ID,PK2ID,SynCre")] Mouse mouse)
+        public async Task<IActionResult> Create(Mouse mouse)
         {
             if (ModelState.IsValid)
             {
+                mouse.PK1 = await _context.GeneExpression.SingleAsync(g => g.GeneExpressionID == mouse.PK1ID);
+                mouse.PK2 = await _context.GeneExpression.SingleAsync(g => g.GeneExpressionID == mouse.PK2ID);
                 _context.Add(mouse);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Description", mouse.LineID);
-            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName", mouse.PK1ID);
-            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName", mouse.PK2ID);
-            return View(mouse);
+            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Name", mouse.LineID);
+            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK1ID);
+            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK2ID);
+            return RedirectToRoute("Line", "Index");
         }
 
         // GET: Mice/Edit/5
@@ -110,6 +112,8 @@ namespace MouseGeno.Controllers
             {
                 try
                 {
+                    mouse.PK1 = await _context.GeneExpression.SingleAsync(g => g.GeneExpressionID == mouse.PK1ID);
+                    mouse.PK2 = await _context.GeneExpression.SingleAsync(g => g.GeneExpressionID == mouse.PK2ID);
                     _context.Update(mouse);
                     await _context.SaveChangesAsync();
                 }
