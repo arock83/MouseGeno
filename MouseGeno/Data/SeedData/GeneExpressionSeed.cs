@@ -15,7 +15,7 @@ namespace MouseGeno.Data.SeedData
             
             if (context.GeneExpression.Any())
             {
-                //user table seeded
+                //GeneExpression table seeded
             }
             else
             {

@@ -16,7 +16,7 @@ namespace MouseGeno.Data.SeedData
 
             if (context.HealthStatus.Any())
             {
-                //Condition table already seeded
+                //HealthStatus table already seeded
             }
             else
             {
