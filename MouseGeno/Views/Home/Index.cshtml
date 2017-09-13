@@ -11,11 +11,13 @@
     <div class="col-md-4">
         <h3>Mouse Lines</h3>
         <br />
-        @foreach(var line in Model.Lines)
+        @foreach (var line in Model.Lines)
         {
-            
-            <h4>@line.Name</h4>
-            <p>@line.Description</p>
+
+            <a asp-controller="Lines" asp-action="Details" asp-route-id="@line.LineID">
+                <h4>@line.Name</h4>
+                <p>@line.Description</p>
+            </a>
             <hr />
 
         }

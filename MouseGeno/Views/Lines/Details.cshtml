@@ -1,12 +1,123 @@
-﻿@model MouseGeno.Models.Line
+﻿@model MouseGeno.Models.ViewModels.LineDetailsViewModel
 
-@{
-    ViewData["Title"] = "Details";
-}
 
-<h2>Details</h2>
+<h2>@Model.Line.Name</h2>
+<p>@Model.Line.Description</p>
 
-<div>
+<div class="row container">
+    <div class="container col-md-3">
+        <h3>Cages</h3>
+        @foreach (Cage cage in Model.Cages)
+        {
+            <h4>@cage.CageNumber</h4>
+            <p>Cubicle: @cage.Cubicle</p>
+            <br />
+
+        }
+
+    </div>
+    <div class="container col-md-9">
+        <h3>Mice</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        EarTag
+                    </th>
+                    <th>
+                        ToeClip
+                    </th>
+                    <th>
+                        Sex
+                    </th>
+                    <th>
+                        Birth
+                    </th>
+                    <th>
+                        Death
+                    </th>
+                    <th>
+                        PK1
+                    </th>
+                    <th>
+                        PK2
+                    </th>
+                    <th>
+                        SynCre
+                    </th>
+                    <th>
+                        <a asp-controller="Mice" asp-action="Create">Create New</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Mouse mouse in Model.Mice)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.EarTag)
+                        </td>
+                        <td>
+                            @if(mouse.ToeClip == null)
+                            {
+                                <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                            } else
+                            {
+                                @Html.DisplayFor(modelItem => mouse.ToeClip)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.Sex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.Birth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.Death)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
+                        </td>
+                        <td>
+                            @if(mouse.SynCre == true)
+                            {
+                                <p> + </p>
+
+                            } else if(mouse.SynCre == false)
+                            {
+                                <p> - </p>
+
+                            } else
+                            {
+                                <p> </p>
+
+                            }
+
+                        </td>
+                        <td>
+                            <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
+                            <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
+                            <a asp-controller="Mice" asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+@*<div>
     <h4>Line</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -27,4 +138,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.LineID">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@

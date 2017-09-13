@@ -23,7 +23,7 @@ namespace MouseGeno.Models
         public DateTime Birth { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime Death { get; set; }
+        public DateTime? Death { get; set; }
 
         [Required]
         public int LineID { get; set; }
@@ -56,7 +56,7 @@ namespace MouseGeno.Models
         [NotMapped]
         public GeneExpression PK2 { get; set; }
 
-        public bool SynCre { get; set; }
+        public bool? SynCre { get; set; }
 
         public virtual ICollection<MouseCage> MouseCages { get; set; }
 
