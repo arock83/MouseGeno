@@ -172,5 +172,9 @@ namespace MouseGeno.Controllers
         {
             return _context.Mouse.Any(e => e.MouseID == id);
         }
+
+        
+
+
     }
 }

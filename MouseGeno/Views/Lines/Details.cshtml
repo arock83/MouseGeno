@@ -37,6 +37,9 @@
                         Death
                     </th>
                     <th>
+                        Cage#
+                    </th>
+                    <th>
                         PK1
                     </th>
                     <th>
@@ -74,6 +77,17 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => mouse.Death)
+                        </td>
+                        <td>
+                            @if(mouse.MouseCages.All(mc => mc.EndDate != null))
+                            {
+                                <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID">[Assign]</a>
+
+                            } else
+                            {
+                                @Model.Cages.Single(c => c.CageID == mouse.MouseCages.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID).CageNumber
+                            }
+                            
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
