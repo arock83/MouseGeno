@@ -39,9 +39,13 @@ namespace MouseGeno.Controllers
 
             var miceInLine = _context.Mouse.Where(m => m.LineID == id)
                 .Include(m => m.PK1)
-                .Include(m => m.PK2).ToList();
+                .Include(m => m.PK2)
+                .Include(m => m.MouseCages)
+                .ToList();
 
             var miceCagesInLine = _context.MouseCage.Where(mc => mc.Mouse.LineID == id).ToList();
+
+            
 
             var cagesInLine = (
                 from c in _context.Cage
