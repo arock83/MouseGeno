@@ -6,10 +6,15 @@
 
 <div class="row container">
     <div class="container col-md-3">
-        <h3>Cages</h3>
+        <a asp-controller="Cages" asp-action="Index" asp-route-lineID="@Model.Line.LineID">
+            <h3>Cages</h3>
+        </a>
+        <br />
         @foreach (Cage cage in Model.Cages)
         {
-            <h4>@cage.CageNumber</h4>
+            <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
+                <h4>@cage.CageNumber</h4>
+            </a>
             <p>Cubicle: @cage.Cubicle</p>
             <br />
 

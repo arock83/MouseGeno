@@ -1,36 +1,105 @@
-﻿@model MouseGeno.Models.Cage
+﻿@model MouseGeno.Models.ViewModels.CageDetailsViewModel
 
-@{
-    ViewData["Title"] = "Details";
-}
 
-<h2>Details</h2>
+<h3>Cage # @Model.Cage.CageNumber</h3>
+<p>Cubicle: @Model.Cage.Cubicle</p>
 
-<div>
-    <h4>Cage</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CageNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CageNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cubicle)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cubicle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Breeding)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Breeding)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CageID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                EarTag
+            </th>
+            <th>
+                ToeClip
+            </th>
+            <th>
+                Sex
+            </th>
+            <th>
+                Birth
+            </th>
+            <th>
+                Mom
+            </th>
+            <th>
+                Dad
+            </th>
+            <th>
+                PK1
+            </th>
+            <th>
+                PK2
+            </th>
+            <th>
+                SynCre
+            </th>
+            <th>
+                Line
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Mouse mouse in Model.MiceInCage)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.EarTag)
+                </td>
+                <td>
+                    @if (mouse.ToeClip == null)
+                    {
+                        <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => mouse.ToeClip)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.Sex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.Birth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.Mom.EarTag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.Dad.EarTag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
+                </td>
+                <td>
+                    @if (mouse.SynCre == true)
+                    {
+                        <p> + </p>
+                    }
+                    else if (mouse.SynCre == false)
+                    {
+                        <p> - </p>
+                    }
+                    else
+                    {
+                        <p> </p>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => mouse.Line.Name)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
