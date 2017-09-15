@@ -7,7 +7,7 @@
 <div class="row container">
     <div class="container col-md-3">
         <a asp-controller="Cages" asp-action="Index" asp-route-lineID="@Model.Line.LineID">
-            <h3>Cages</h3>
+            <h3>Current Cages</h3>
         </a>
         <br />
         @foreach (Cage cage in Model.Cages)
@@ -22,7 +22,7 @@
 
     </div>
     <div class="container col-md-9">
-        <h3>Mice</h3>
+        <h3>Current Mice</h3>
         <table class="table">
             <thead>
                 <tr>

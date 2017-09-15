@@ -8,5 +8,7 @@ namespace MouseGeno.Models.ViewModels
     public class HomeViewModel
     {
         public ICollection<Line> Lines { get; set; }
+
+        public ICollection<News> News { get; set; }
     }
 }
