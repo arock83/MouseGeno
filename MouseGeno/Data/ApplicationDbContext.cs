@@ -46,5 +46,7 @@ namespace MouseGeno.Data
         public DbSet<MouseTask> MouseTask { get; set; }
 
         public DbSet<TaskType> TaskType { get; set; }
+
+        public DbSet<News> News { get; set; }
     }
 }

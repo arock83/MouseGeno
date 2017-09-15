@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace MouseGeno.Models
 {
-    public class Line
+    public class News
     {
         [Key]
-        public int LineID { get; set; }
+        public int NewsID { get; set; }
 
         [Required]
-        [StringLength(24)]
-        public string Name { get; set; }
+        public ApplicationUser User { get; set; }
+
+        public int LineID { get; set; }
+
+        public Line Line { get; set; }
 
         [Required]
         [StringLength(155)]
         public string Description { get; set; }
 
-        public virtual ICollection<Mouse> Mice { get; set; }
-
-        public virtual ICollection<News> News { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
     }
 }
