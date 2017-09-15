@@ -43,10 +43,6 @@ namespace MouseGeno.Controllers
                 .Include(m => m.MouseCages)
                 .ToList();
 
-            var miceCagesInLine = _context.MouseCage.Where(mc => mc.Mouse.LineID == id).ToList();
-
-            
-
             var cagesInLine = (
                 from c in _context.Cage
                 from mc in _context.MouseCage

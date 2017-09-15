@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MouseGeno.Data;
 using MouseGeno.Models;
 using MouseGeno.Models.ViewModels;
+using static MouseGeno.Models.ViewModels.CageLineViewModel;
 
 namespace MouseGeno.Controllers
 {
@@ -21,27 +22,71 @@ namespace MouseGeno.Controllers
         }
 
         // GET: Cages
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int lineID)
         {
-            return View(await _context.Cage.ToListAsync());
+            List<Cage> cagesInLine = (
+                from c in _context.Cage
+                join mc in _context.MouseCage on c.CageID equals mc.CageID
+                join m in _context.Mouse on mc.MouseID equals m.MouseID
+                where mc.EndDate == null
+                && m.LineID == lineID
+                select c).ToList();
+
+
+            ICollection<Mouse> miceInLine = _context.Mouse.Where(m => m.LineID == lineID && m.Death == null).Include(m => m.MouseCages).ToList();
+            Line line = _context.Line.Single(x => x.LineID == lineID);
+            List<CagedMice> cagedMice = new List<CagedMice>();
+            
+            foreach(Cage cage in cagesInLine)
+            {
+                ICollection<MouseCage> mouseCages = _context.MouseCage.Where(mc => mc.EndDate == null).ToList();
+                List<Mouse> mice = miceInLine.Where(m => m.MouseID == mouseCages.Single(mc => mc.CageID == cage.CageID).MouseID).ToList();
+
+                cagedMice.Add(
+                    new CagedMice
+                    {
+                        Cage = cage,
+                        Mice = mice
+      
+                    }
+                );
+            }
+            CageLineViewModel model = new CageLineViewModel
+            {
+                Line = line,
+                MiceInCages = cagedMice
+            };
+
+            return View(model);
         }
 
         // GET: Cages/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var cage = await _context.Cage
                 .SingleOrDefaultAsync(m => m.CageID == id);
+
             if (cage == null)
             {
                 return NotFound();
             }
 
-            return View(cage);
+            var miceInCage = (
+                from m in _context.Mouse
+                from mc in _context.MouseCage
+                where m.MouseID == mc.MouseID
+                && mc.EndDate == null
+                && mc.CageID == id
+                select m).Include(m => m.PK1).Include(m => m.PK2).Include(m => m.Line).ToList();
+
+            CageDetailsViewModel model = new CageDetailsViewModel
+            {
+                Cage = cage,
+                MiceInCage = miceInCage
+            };
+
+            return View(model);
         }
 
         // GET: Cages/Create

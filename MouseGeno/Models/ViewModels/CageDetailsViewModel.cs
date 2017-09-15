@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace MouseGeno.Models.ViewModels
 {
-    public class CreateLineViewModel
+    public class CageDetailsViewModel
     {
-        public Line Line { get; set; }
+        public Cage Cage { get; set; }
 
+        public List<Mouse> MiceInCage { get; set; }
     }
 }
