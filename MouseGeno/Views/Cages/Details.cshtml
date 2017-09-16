@@ -103,3 +103,30 @@
         }
     </tbody>
 </table>
+<div class="container">
+    <h4>Actions</h4>
+    
+    @if(Model.Cage.Breeding == true && Model.MiceInCage.Where(m => m.Sex == "F").Count() > 0 && Model.MiceInCage.Where(m => m.Sex == "M").Count() > 0)
+    {
+        <form>
+            <select name="numOfPups">
+                <option value="1" name="numOfPups">1</option>
+                <option value="2" name="numOfPups">2</option>
+                <option value="3" name="numOfPups">3</option>
+                <option value="4" name="numOfPups">4</option>
+                <option value="5" name="numOfPups">5</option>
+                <option value="6" name="numOfPups">6</option>
+                <option value="7" name="numOfPups">7</option>
+                <option value="8" name="numOfPups">8</option>
+                <option value="9" name="numOfPups">9</option>
+                <option value="10" name="numOfPups">10</option>
+            </select>
+            <input type="hidden" value="@Model.Cage.CageID" name="cageID"/>
+            <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born"/>
+        </form>
+        
+
+    }
+
+</div>
+
