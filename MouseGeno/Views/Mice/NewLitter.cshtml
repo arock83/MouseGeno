@@ -1,0 +1,68 @@
+﻿@model MouseGeno.Models.ViewModels.NewLitterViewModel
+
+
+<h2>Create New Litter in Cage # @Model.Cage.CageNumber</h2>
+<form asp-action="MakeLitter" method="post">
+    <h4>Confirm Breeding Pair</h4>
+    <div class="row container">
+        <div class="col-md-4 container">
+            <h5>Female</h5>
+            @foreach (Mouse parent in Model.Parents.Where(m => m.Sex == "F"))
+            {
+                <label name="momID">@parent.EarTag</label>
+                <input type="radio" value="@parent.MouseID" asp-for="MomID" name="MomID" />
+            }
+        </div>
+        <div class="col-md-4 container">
+            <h5>Male</h5>
+            @foreach (Mouse parent in Model.Parents.Where(m => m.Sex == "M"))
+            {
+                <label name="dadID">@parent.EarTag</label>
+                <input type="radio" value="@parent.MouseID" asp-for="DadID" name="DadID" />
+
+            }
+        </div>
+    </div>
+    <br />
+    <div>
+
+        <label asp-for="BirthDate" class="control-label">Date of Birth</label>
+        <input type="date" name="BirthDate" asp-for="BirthDate" />
+        <br />
+        <br />
+            @for(var i = 0; i < Model.Pups.Count; i++)
+        {
+                <div class="row container">
+                    <div class="col-md-3 container">
+                        <label class="control-label">ToeClip</label>
+                        @Html.EditorFor(m => m.Pups[i].ToeClip) 
+                    </div>
+                    <div class="mol-md-3 contatiner">
+                        <label class="control-label">Sex</label>
+                        @Html.DropDownListFor(x => x.Pups[i].Sex, new List<SelectListItem>
+                        {
+                        new SelectListItem() {Text = "M", Value="M"},
+                        new SelectListItem() {Text = "F", Value="F"},
+                        
+                        })  
+                    </div>
+
+                    @*<div class="col-md-1 container">
+                        <label asp-for="Sex" class="control-label">Sex</label>
+                        <input asp-for="Sex" class="form-control" name="Pups"/>
+                        <span asp-validation-for="Sex" class="text-danger"></span>
+                    </div>
+                    <input asp-for="MomID" type="hidden" value="momID.value" name="Pups"/>
+                    <input asp-for="DadID" type="hidden" value="dadID.value" name="Pups"/>
+                    <input asp-for="Birth" type="hidden" value="BirthDate.value" name="Pups"/>*@
+                </div>
+         }
+        <br />
+        
+        <input type="hidden" value="@Model.Cage.CageID" asp-for="CageID" name="CageID" />
+
+        <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="Make Litter" />
+        </div>
+</form>
+
+

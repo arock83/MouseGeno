@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MouseGeno.Data;
 using MouseGeno.Models;
+using MouseGeno.Models.ViewModels;
 
 namespace MouseGeno.Controllers
 {
@@ -173,8 +174,74 @@ namespace MouseGeno.Controllers
             return _context.Mouse.Any(e => e.MouseID == id);
         }
 
-        
+        //Make Litter
+        [HttpGet]
+        public IActionResult NewLitter(int cageID, int numOfPups)
+        {
+
+            Cage cage = _context.Cage.Single(c => c.CageID == cageID);
+            List<Mouse> parents = (
+                from m in _context.Mouse
+                from mc in _context.MouseCage
+                where m.MouseID == mc.MouseID
+                && mc.EndDate == null
+                && mc.CageID == cage.CageID
+                select m).Include(m => m.PK1).Include(m => m.PK2).Include(m => m.Line).ToList();
+            if(parents.Where(m => m.Sex == "F").Count() == 0 || parents.Where(m => m.Sex == "M").Count() == 0)
+            {
+                return RedirectToAction("Details", "Cages", new { id = cage.CageID });
+            }
+            List<Mouse> pups = new List<Mouse>();
+            for(int n = 0; n < numOfPups; n++)
+            {
+                pups.Add(new Mouse() );
+            }
+
+            NewLitterViewModel model = new NewLitterViewModel();
+            model.Cage = cage;
+            model.Parents = parents;
+            model.NumOfPups = numOfPups;
+            model.Pups = pups;
+            
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult NewLitter(NewLitterViewModel model)
+        {
 
 
+            for(int n = 0; n < model.Pups.Count(); n++)
+            {
+                _context.Mouse.Add(
+                    new Mouse
+                    {
+                        ToeClip = model.Pups[n].ToeClip,
+                        MomID = model.MomID,
+                        DadID = model.DadID,
+                        Sex = model.Pups[n].Sex,
+                        Birth = model.BirthDate,
+                        LineID = _context.Line.Single(l => l.LineID == _context.Mouse.Single(m => m.MouseID == model.MomID).LineID).LineID
+                    }
+                    );
+                _context.SaveChanges();
+                Mouse newPup = _context.Mouse.Single(m => m.ToeClip == model.Pups[n].ToeClip && m.Sex == model.Pups[n].Sex && m.Birth == model.BirthDate);
+                _context.MouseCage.Add(
+                    new MouseCage
+                    {
+                        
+                        MouseID = newPup.MouseID,
+                        CageID = model.CageID,
+                        StartDate = model.BirthDate
+                    }
+                    );
+                
+                 _context.SaveChanges();
+            }
+
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", "Cages", new { id = model.CageID });
+        }
     }
 }

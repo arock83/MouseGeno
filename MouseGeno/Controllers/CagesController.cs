@@ -33,14 +33,19 @@ namespace MouseGeno.Controllers
                 select c).ToList();
 
 
-            ICollection<Mouse> miceInLine = _context.Mouse.Where(m => m.LineID == lineID && m.Death == null).Include(m => m.MouseCages).ToList();
+            List<Mouse> miceInLine = _context.Mouse.Where(m => m.LineID == lineID && m.Death == null).Include(m => m.MouseCages).ToList();
             Line line = _context.Line.Single(x => x.LineID == lineID);
             List<CagedMice> cagedMice = new List<CagedMice>();
             
             foreach(Cage cage in cagesInLine)
             {
                 ICollection<MouseCage> mouseCages = _context.MouseCage.Where(mc => mc.EndDate == null).ToList();
-                List<Mouse> mice = miceInLine.Where(m => m.MouseID == mouseCages.Single(mc => mc.CageID == cage.CageID).MouseID).ToList();
+                List<Mouse> mice = (
+                    from m in miceInLine
+                    from mc in mouseCages
+                    where m.MouseID == mc.MouseID
+                    && mc.CageID == cage.CageID
+                    select m).ToList();
 
                 cagedMice.Add(
                     new CagedMice
