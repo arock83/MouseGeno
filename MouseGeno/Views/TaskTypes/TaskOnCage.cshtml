@@ -1,0 +1,133 @@
+﻿@model MouseGeno.Models.ViewModels.TaskOnCageViewModel
+@{
+    ViewData["Title"] = "TaskOnCage";
+}
+
+<h2>TaskOnCage</h2>
+
+<h3>Cage # @Model.Cage.CageNumber</h3>
+<p>Cubicle: @Model.Cage.Cubicle</p>
+<form>
+    <input type="date" name="date"/>
+    <br />
+    <div class="row container">
+        <div class="col-md-2 container">
+            EarTag
+        </div>
+        <div class="col-md-2 container">
+            ToeClip
+        </div>
+        <div class="col-md-1 container">
+            Sex
+        </div>
+        <div class="col-md-2">
+            Data
+        </div>
+        <div class="col-md-3">
+            Comments
+        </div>
+    </div>
+    @for (var i = 0; i < Model.MiceInCage.Count(); i++)
+    {
+        <div class="row container">
+            <div class="col-md-2 container">
+                @Model.MiceInCage[i].EarTag
+            </div>
+            <div class="col-md-2 container">
+                @Model.MiceInCage[i].ToeClip
+            </div>
+            <div class="col-md-1 container">
+                @Model.MiceInCage[i].Sex
+            </div>
+            <div class="col-md-2">
+                @*<input name="MouseTasks[i].MouseID" value="@Model.MiceInCage[i].MouseID" type="hidden" />
+                <input name="MouseTasks[i].TaskTypeID" value="@Model.TaskType.TaskTypeID" type="hidden" />*@
+                @Html.Hidden("mouseTasks[i].MouseID", "@Model.MiceInCage[i].MouseID")
+                @Html.Hidden("mouseTasks[i].TaskID", "@Model.TaskType.TaskTypeID")
+                @*@Html.HiddenFor(m => m.MouseTasks[i].MouseID, new { Value = "@Model.MiceInCage[i].MouseID" })
+                @Html.HiddenFor(m => m.MouseTasks[i].TaskTypeID, new { Value = "@Model.TaskType.TaskTypeID" })*@
+                @Html.EditorFor(m => m.MouseTasks[i].Data)
+            </div>
+            <div class="col-md-3">
+                @Html.TextAreaFor(m => m.MouseTasks[i].Comments)
+            </div>
+
+        </div>
+    }
+    <input type="hidden" value="Model.MiceInCage.ToList()" name="mice" />
+    <input type="hidden" value="@Model.TaskType.TaskTypeID" name="taskTypeID"/>
+    <input type="hidden" value="@Model.Cage.CageID"name="cageID"/>
+    <input type="submit" asp-controller="TaskTypes" asp-action="PerformTaskOnCage" value="Record Data"/>
+</form>
+<br />
+
+
+
+
+
+
+
+
+
+
+<br />
+<h4>Current Mice</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                EarTag
+            </th>
+            <th>
+                ToeClip
+            </th>
+            <th>
+                Sex
+            </th>
+            <th>
+                Birth
+            </th>
+                @Model.TaskType.Name
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            
+            @for(int x = 0; x < Model.MiceInCage.Count(); x++ )
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.MiceInCage[x].EarTag)
+                    </td>
+                    <td>
+                        @if (Model.MiceInCage[x].ToeClip == null)
+                        {
+                            <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => Model.MiceInCage[x].ToeClip)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.MiceInCage[x].Sex)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.MiceInCage[x].Birth)
+                    </td>
+                    
+                        
+                        
+                        
+
+                    <td>
+                        <a asp-controller="Mice" asp-action="Edit" asp-route-id="@Model.MiceInCage[x].MouseID">Edit</a> |
+                        <a asp-controller="Mice" asp-action="Details" asp-route-id="@Model.MiceInCage[x].MouseID">Details</a> |
+                        <a asp-controller="Mice" asp-action="Delete" asp-route-id="@Model.MiceInCage[x].MouseID">Delete</a>
+                    </td>
+                </tr>
+            }
+
+    </tbody>
+</table>
