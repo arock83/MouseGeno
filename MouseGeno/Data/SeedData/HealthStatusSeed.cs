@@ -45,6 +45,16 @@ namespace MouseGeno.Data.SeedData
                     {
                         Name = "Hair Lose",
                         Description = ""
+                    },
+                    new HealthStatus
+                    {
+                        Name = "Terminated",
+                        Description = "Mouse Euthanized by Technician"
+                    },
+                    new HealthStatus
+                    {
+                        Name = "Died",
+                        Description = "Mouse Died of Natural Causes"
                     }
                     );
                 context.SaveChanges();
