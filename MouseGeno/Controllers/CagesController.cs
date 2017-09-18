@@ -224,6 +224,9 @@ namespace MouseGeno.Controllers
         public IActionResult CageAssign(int mouseID)
         {
             Mouse mouse = _context.Mouse.Single(m => m.MouseID == mouseID);
+
+            Cage currentCage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.SingleOrDefault(mc => mc.MouseID == mouseID && mc.EndDate == null).CageID);
+
             List<Cage> allCages = _context.Cage.ToList();
             List<MouseCage> allMouseCage = _context.MouseCage.ToList();
             List<Cage> allBreederCages = allCages.Where(c => c.Breeding == true).ToList();
@@ -247,8 +250,8 @@ namespace MouseGeno.Controllers
                 UsedBreederCages = usedBreederCages,
                 UsedStandardCages = usedStandardCages,
                 NotUsedBreederCages = notUsedBreederCages,
-
-                NotUsedStandardCages = notUsedStandardCages
+                NotUsedStandardCages = notUsedStandardCages,
+                CurrentCage = currentCage
             };
 
             return View(model);
@@ -257,13 +260,22 @@ namespace MouseGeno.Controllers
         [HttpPost]
         public IActionResult CageAssign (CageAssignViewModel model)
         {
-            Mouse mouse = _context.Mouse.Single(m => m.MouseID == model.mouseID);
+            Mouse mouse = _context.Mouse.Single(m => m.MouseID == model.MouseID);
+            Cage currentCage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID);
+
+            if(currentCage != null)
+            {
+                MouseCage oldMouseCage = _context.MouseCage.Single(mc => mc.MouseID == model.MouseID && mc.CageID == currentCage.CageID && mc.EndDate == null);
+                oldMouseCage.EndDate = model.Date;
+                _context.MouseCage.Update(oldMouseCage);
+            }
+
            _context.MouseCage.Add(
                 new MouseCage
                 {
-                    CageID = model.cageID,
-                    MouseID = model.mouseID,
-                    StartDate = model.date
+                    CageID = model.NewCageID,
+                    MouseID = model.MouseID,
+                    StartDate = model.Date
                 }
                 );
             _context.SaveChanges();
