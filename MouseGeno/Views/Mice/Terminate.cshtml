@@ -1,0 +1,93 @@
+﻿@model MouseGeno.Models.Mouse
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@if (Model.EarTag != null)
+{
+    <h2>Terminate Mouse # @Model.EarTag</h2>
+} else
+{
+    <h2>Terminste Mouse # @Model.ToeClip</h2>
+}
+
+
+<h3>Are you sure you want to terminate this mouse?</h3>
+<div>
+    <h4>Mouse</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EarTag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EarTag)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ToeClip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ToeClip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Death)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Death)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MomID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MomID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DadID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DadID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SynCre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SynCre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Line)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Line.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PK1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PK1.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PK2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PK2.FullName)
+        </dd>
+    </dl>
+
+    <form asp-action="TerminateConfirmed">
+        <input type="date" name="date"/>
+        <input type="submit" value="TerminateConfirmed" class="btn btn-default" asp-action="TerminateConfirmed" asp-route-id="@Model.MouseID" asp-route-date="date"/> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

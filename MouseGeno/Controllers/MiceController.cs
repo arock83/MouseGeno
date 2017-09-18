@@ -253,9 +253,9 @@ namespace MouseGeno.Controllers
 
         // GET: Mice/Terminate/5
         [HttpGet]        
-        public async Task<IActionResult> Terminate(int? id)
+        public async Task<IActionResult> Terminate(int? mouseID)
         {
-            if (id == null)
+            if (mouseID == null)
             {
                 return NotFound();
             }
@@ -264,7 +264,7 @@ namespace MouseGeno.Controllers
                 .Include(m => m.Line)
                 .Include(m => m.PK1)
                 .Include(m => m.PK2)
-                .SingleOrDefaultAsync(m => m.MouseID == id);
+                .SingleOrDefaultAsync(m => m.MouseID == mouseID);
             if (mouse == null)
             {
                 return NotFound();
@@ -273,19 +273,22 @@ namespace MouseGeno.Controllers
             return View(mouse);
         }
 
-        // POST: Mice/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // POST: Mice/TerminateConfirmed/5
+        [HttpPost]
         public async Task<IActionResult> TerminateConfirmed(int id, DateTime date)
         {
             var mouse = await _context.Mouse.SingleOrDefaultAsync(m => m.MouseID == id);
             mouse.Death = date;
 
-            MouseCage openCage = await _context.MouseCage.SingleOrDefaultAsync(mc => mc.MouseID == mouse.MouseID && mc.EndDate == null);
-
-            openCage.EndDate = date;
+            MouseCage openCage = await _context.MouseCage.SingleOrDefaultAsync(mc => mc.MouseID == id && mc.EndDate == null);
+            if(openCage != null)
+            {
+                openCage.EndDate = date;
+                _context.MouseCage.Update(openCage);
+            }
+            
             _context.Mouse.Update(mouse);
-            _context.MouseCage.Update(openCage);
+            
             _context.MouseHealthStatus.Add(new MouseHealthStatus
             {
                 MouseID = mouse.MouseID,
