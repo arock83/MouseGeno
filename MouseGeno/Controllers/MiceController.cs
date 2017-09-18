@@ -187,6 +187,8 @@ namespace MouseGeno.Controllers
                 && mc.EndDate == null
                 && mc.CageID == cage.CageID
                 select m).Include(m => m.PK1).Include(m => m.PK2).Include(m => m.Line).ToList();
+
+            //Test to make sure there are both males and females before moving to view
             if(parents.Where(m => m.Sex == "F").Count() == 0 || parents.Where(m => m.Sex == "M").Count() == 0)
             {
                 return RedirectToAction("Details", "Cages", new { id = cage.CageID });

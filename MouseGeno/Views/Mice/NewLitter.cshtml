@@ -31,7 +31,7 @@
         <br />
         <br />
             @for(var i = 0; i < Model.Pups.Count; i++)
-        {
+            {
                 <div class="row container">
                     <div class="col-md-3 container">
                         <label class="control-label">ToeClip</label>
@@ -46,17 +46,8 @@
                         
                         })  
                     </div>
-
-                    @*<div class="col-md-1 container">
-                        <label asp-for="Sex" class="control-label">Sex</label>
-                        <input asp-for="Sex" class="form-control" name="Pups"/>
-                        <span asp-validation-for="Sex" class="text-danger"></span>
-                    </div>
-                    <input asp-for="MomID" type="hidden" value="momID.value" name="Pups"/>
-                    <input asp-for="DadID" type="hidden" value="dadID.value" name="Pups"/>
-                    <input asp-for="Birth" type="hidden" value="BirthDate.value" name="Pups"/>*@
                 </div>
-         }
+            }
         <br />
         
         <input type="hidden" value="@Model.Cage.CageID" asp-for="CageID" name="CageID" />
