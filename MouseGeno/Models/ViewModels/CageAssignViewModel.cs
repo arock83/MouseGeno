@@ -9,11 +9,15 @@ namespace MouseGeno.Models.ViewModels
     {
         public Mouse Mouse { get; set; }
 
-        public int cageID { get; set; }
+        public int? CurrentCageID { get; set; }
 
-        public int mouseID { get; set; }
+        public Cage CurrentCage { get; set; }
 
-        public DateTime date { get; set; }
+        public int NewCageID { get; set; }
+
+        public int MouseID { get; set; }
+
+        public DateTime Date { get; set; }
 
         public List<Cage> NotUsedStandardCages { get; set; }
 

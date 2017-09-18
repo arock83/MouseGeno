@@ -2,19 +2,27 @@
 
 @if (Model.Mouse.EarTag != null)
 {
-    <h2>Assign Cage to Mouse @Model.Mouse.EarTag</h2>
+    <h2>Assign Cage to Mouse # @Model.Mouse.EarTag</h2>
 }
 else if (Model.Mouse.ToeClip != null)
 {
-    <h2>Assign Cage to Mouse @Model.Mouse.ToeClip</h2>
+    <h2>Assign Cage to Mouse # @Model.Mouse.ToeClip</h2>
 } else
 {
     <h2>No Mouse Selected to Assign a Cage to!</h2>
 }
+@if (Model.CurrentCage != null)
+{
+    <p>Mouse is currently in Cage # @Model.CurrentCage.CageNumber</p>
+} else
+{
+    <p>Mouse is currently not in a cage</p>
+
+}
 <form asp-action="CageAssign">
     <div class="row container">
         <h4>Pick a Date Mouse was Assigned</h4>
-        <input type="date" asp-for="date" />
+        <input type="date" asp-for="Date" />
     </div>
 
     @if (Model.NotUsedBreederCages.Count() > 0)
@@ -26,7 +34,7 @@ else if (Model.Mouse.ToeClip != null)
 
                 <div class="container col-md-1">
                     <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="cageID" />
+                    <input type="radio" value="@cage.CageID" asp-for="NewCageID" />
                 </div>
             }
         </div>
@@ -39,7 +47,7 @@ else if (Model.Mouse.ToeClip != null)
             {
                 <div class="container col-md-1">
                     <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="cageID"/>
+                    <input type="radio" value="@cage.CageID" asp-for="NewCageID"/>
                 </div>
             }
         </div>
@@ -53,7 +61,7 @@ else if (Model.Mouse.ToeClip != null)
              
                     <div class="container col-md-1">
                         <label name="cageID">@cage.CageNumber</label>
-                        <input type="radio" value ="@cage.CageID" asp-for="cageID"/>
+                        <input type="radio" value ="@cage.CageID" asp-for="NewCageID"/>
                     </div>
                
             }
@@ -67,12 +75,13 @@ else if (Model.Mouse.ToeClip != null)
             {
                 <div class="container col-md-1">
                     <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="cageID"/>
+                    <input type="radio" value="@cage.CageID" asp-for="NewCageID"/>
                 </div>
             }
         </div>
     }
-    <input type="hidden" asp-for="mouseID" value="@Model.Mouse.MouseID" />
+    <input type="hidden" asp-for="MouseID" value="@Model.Mouse.MouseID" />
+    <input type="hidden" asp-for="CurrentCageID" value="@Model.CurrentCageID" />
     <div class="form-group">
         <input type="submit" value="Assign" class="btn btn-default" />
     </div>

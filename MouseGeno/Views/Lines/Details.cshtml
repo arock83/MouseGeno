@@ -84,7 +84,7 @@
                             @Html.DisplayFor(modelItem => mouse.Death)
                         </td>
                         <td>
-                            @if(mouse.MouseCages.All(mc => mc.EndDate != null))
+                            @if(mouse.MouseCages.Count() == 0 || mouse.MouseCages.All(mc => mc.EndDate != null))
                             {
                                 <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID">[Assign]</a>
 
