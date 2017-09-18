@@ -180,13 +180,21 @@ namespace MouseGeno.Controllers
                     mouse.Mom = _context.Mouse.Single(m => m.MouseID == mouse.MomID);
                 }
             }
+            List<MouseTask> primedTasks = new List<MouseTask>();
+            for(int n = 0; n < miceInCage.Count(); n ++)
+            {
+                primedTasks.Add(new MouseTask());
+            }
+                
+            
 
 
             TaskOnCageViewModel model = new TaskOnCageViewModel
             {
                 MiceInCage = miceInCage,
                 TaskType = _context.TaskType.Single(t => t.TaskTypeID == taskID),
-                Cage = cage
+                Cage = cage,
+                MouseTasks = primedTasks
 
             };
 

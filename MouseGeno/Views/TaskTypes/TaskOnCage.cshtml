@@ -40,12 +40,16 @@
                 @Model.MiceInCage[i].Sex
             </div>
             <div class="col-md-2">
-                @*<input name="MouseTasks[i].MouseID" value="@Model.MiceInCage[i].MouseID" type="hidden" />
-                <input name="MouseTasks[i].TaskTypeID" value="@Model.TaskType.TaskTypeID" type="hidden" />*@
+                
+                <input name="MouseTasks[@i].MouseID" value="@Model.MiceInCage[i].MouseID" type="hidden" />
+                <input name="MouseTasks[@i].TaskTypeID" value="@Model.TaskType.TaskTypeID" type="hidden" />
+
                 @Html.Hidden("mouseTasks[i].MouseID", "@Model.MiceInCage[i].MouseID")
                 @Html.Hidden("mouseTasks[i].TaskID", "@Model.TaskType.TaskTypeID")
-                @*@Html.HiddenFor(m => m.MouseTasks[i].MouseID, new { Value = "@Model.MiceInCage[i].MouseID" })
-                @Html.HiddenFor(m => m.MouseTasks[i].TaskTypeID, new { Value = "@Model.TaskType.TaskTypeID" })*@
+
+                @Html.HiddenFor(m => m.MouseTasks[@i].MouseID, new { Value = "@Model.MiceInCage[i].MouseID" })
+                @Html.HiddenFor(m => m.MouseTasks[@i].TaskTypeID, new { Value = "@Model.TaskType.TaskTypeID" })
+
                 @Html.EditorFor(m => m.MouseTasks[i].Data)
             </div>
             <div class="col-md-3">
@@ -70,7 +74,7 @@
 
 
 
-<br />
+@*<br />
 <h4>Current Mice</h4>
 <table class="table">
     <thead>
@@ -130,4 +134,4 @@
             }
 
     </tbody>
-</table>
+</table>*@
