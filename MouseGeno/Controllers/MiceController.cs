@@ -8,17 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using MouseGeno.Data;
 using MouseGeno.Models;
 using MouseGeno.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace MouseGeno.Controllers
 {
     public class MiceController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MiceController(ApplicationDbContext context)
+        public MiceController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Mice
         public async Task<IActionResult> Index()
@@ -194,9 +199,9 @@ namespace MouseGeno.Controllers
                 return RedirectToAction("Details", "Cages", new { id = cage.CageID });
             }
             List<Mouse> pups = new List<Mouse>();
-            for(int n = 0; n < numOfPups; n++)
+            for (int n = 0; n < numOfPups; n++)
             {
-                pups.Add(new Mouse() );
+                pups.Add(new Mouse());
             }
 
             NewLitterViewModel model = new NewLitterViewModel();
@@ -204,7 +209,7 @@ namespace MouseGeno.Controllers
             model.Parents = parents;
             model.NumOfPups = numOfPups;
             model.Pups = pups;
-            
+
             return View(model);
         }
         [HttpPost]
@@ -212,7 +217,7 @@ namespace MouseGeno.Controllers
         {
 
 
-            for(int n = 0; n < model.Pups.Count(); n++)
+            for (int n = 0; n < model.Pups.Count(); n++)
             {
                 _context.Mouse.Add(
                     new Mouse
@@ -230,14 +235,14 @@ namespace MouseGeno.Controllers
                 _context.MouseCage.Add(
                     new MouseCage
                     {
-                        
+
                         MouseID = newPup.MouseID,
                         CageID = model.CageID,
                         StartDate = model.BirthDate
                     }
                     );
-                
-                 _context.SaveChanges();
+
+                _context.SaveChanges();
             }
 
 
@@ -245,5 +250,57 @@ namespace MouseGeno.Controllers
 
             return RedirectToAction("Details", "Cages", new { id = model.CageID });
         }
+
+        // GET: Mice/Terminate/5
+        [HttpGet]        
+        public async Task<IActionResult> Terminate(int? mouseID)
+        {
+            if (mouseID == null)
+            {
+                return NotFound();
+            }
+
+            var mouse = await _context.Mouse
+                .Include(m => m.Line)
+                .Include(m => m.PK1)
+                .Include(m => m.PK2)
+                .SingleOrDefaultAsync(m => m.MouseID == mouseID);
+            if (mouse == null)
+            {
+                return NotFound();
+            }
+
+            return View(mouse);
+        }
+
+        // POST: Mice/TerminateConfirmed/5
+        [HttpPost]
+        public async Task<IActionResult> TerminateConfirmed(int id, DateTime date)
+        {
+            var mouse = await _context.Mouse.SingleOrDefaultAsync(m => m.MouseID == id);
+            mouse.Death = date;
+
+            MouseCage openCage = await _context.MouseCage.SingleOrDefaultAsync(mc => mc.MouseID == id && mc.EndDate == null);
+            if(openCage != null)
+            {
+                openCage.EndDate = date;
+                _context.MouseCage.Update(openCage);
+            }
+            
+            _context.Mouse.Update(mouse);
+            
+            _context.MouseHealthStatus.Add(new MouseHealthStatus
+            {
+                MouseID = mouse.MouseID,
+                User = await GetCurrentUserAsync(),
+                HealthStatusID = _context.HealthStatus.Single(hs => hs.Name == "Terminated").HealthStatusID,
+                StartDate = date,
+                EndDate = date
+            });
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Lines", new { id = mouse.LineID});
+        }
+
     }
 }

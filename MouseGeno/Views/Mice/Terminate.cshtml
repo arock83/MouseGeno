@@ -1,11 +1,18 @@
 ﻿@model MouseGeno.Models.Mouse
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
+}
+@if (Model.EarTag != null)
+{
+    <h2>Terminate Mouse # @Model.EarTag</h2>
+} else
+{
+    <h2>Terminste Mouse # @Model.ToeClip</h2>
 }
 
-<h2>Details</h2>
 
+<h3>Are you sure you want to terminate this mouse?</h3>
 <div>
     <h4>Mouse</h4>
     <hr />
@@ -77,9 +84,10 @@
             @Html.DisplayFor(model => model.PK2.FullName)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Terminate" asp-route-mouseID="@Model.MouseID">Terminate Mouse</a>
-    <a asp-action="Edit" asp-route-id="@Model.MouseID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <form asp-action="TerminateConfirmed">
+        <input type="date" name="date"/>
+        <input type="submit" value="TerminateConfirmed" class="btn btn-default" asp-action="TerminateConfirmed" asp-route-id="@Model.MouseID" asp-route-date="date"/> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>
