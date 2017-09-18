@@ -95,9 +95,9 @@
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
+                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
+                    <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
+                    <a asp-controller="Mice" asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
                 </td>
             </tr>
         }
@@ -124,8 +124,22 @@
             <input type="hidden" value="@Model.Cage.CageID" name="cageID"/>
             <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born"/>
         </form>
-        
-
+    }
+    <br />
+    @if(Model.MiceInCage.Count() > 0)
+    {
+        <div class="container row"> 
+            @foreach(TaskType task in Model.Actions)
+            {
+                <div class="col-md-2 container">
+                    <form>
+                        <input type="hidden" value="@Model.Cage.CageID" name="cageID"/>
+                        <input type="hidden" value="@task.TaskTypeID" name="taskID" />
+                        <input type="submit" asp-controller="TaskTypes" asp-action="TaskOnCage" value="@task.Name" />
+                    </form>
+                </div>
+            }
+        </div>
     }
 
 </div>

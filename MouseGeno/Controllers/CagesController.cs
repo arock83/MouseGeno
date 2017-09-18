@@ -69,7 +69,7 @@ namespace MouseGeno.Controllers
         public async Task<IActionResult> Details(int id)
         {
 
-            var cage = await _context.Cage
+            Cage cage = await _context.Cage
                 .SingleOrDefaultAsync(m => m.CageID == id);
 
             if (cage == null)
@@ -77,7 +77,7 @@ namespace MouseGeno.Controllers
                 return NotFound();
             }
 
-            var miceInCage = (
+            List<Mouse> miceInCage = (
                 from m in _context.Mouse
                 from mc in _context.MouseCage
                 where m.MouseID == mc.MouseID
@@ -85,10 +85,28 @@ namespace MouseGeno.Controllers
                 && mc.CageID == id
                 select m).Include(m => m.PK1).Include(m => m.PK2).Include(m => m.Line).ToList();
 
+            foreach(Mouse mouse in miceInCage )
+            {
+                if(mouse.DadID != null)
+                {
+                    mouse.Dad = _context.Mouse.Single(m => m.MouseID == mouse.DadID);
+                }
+                if (mouse.MomID != null)
+                {
+                    mouse.Mom = _context.Mouse.Single(m => m.MouseID == mouse.MomID);
+                }
+            }
+
+            List<TaskType> actions = _context.TaskType.ToList();
+
+            List<Condition> changes = _context.Condition.ToList();
+
             CageDetailsViewModel model = new CageDetailsViewModel
             {
                 Cage = cage,
-                MiceInCage = miceInCage
+                MiceInCage = miceInCage,
+                Actions = actions,
+                Changes = changes
             };
 
             return View(model);

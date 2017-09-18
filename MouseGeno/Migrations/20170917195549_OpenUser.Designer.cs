@@ -11,9 +11,10 @@ using System;
 namespace MouseGeno.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170917195549_OpenUser")]
+    partial class OpenUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,6 +145,7 @@ namespace MouseGeno.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("Initials")
+                        .IsRequired()
                         .HasMaxLength(3);
 
                     b.Property<bool>("LockoutEnabled");
@@ -151,6 +153,7 @@ namespace MouseGeno.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(40);
 
                     b.Property<string>("NormalizedEmail")
