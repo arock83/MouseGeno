@@ -11,6 +11,8 @@ namespace MouseGeno.Models.ViewModels
 
         public List<Mouse> MiceInCage { get; set; }
 
+        public List<MouseTask> MouseTasks { get; set; }
+
         public List<TaskType> Actions { get; set; }
 
         public List<Condition> Changes { get; set; }

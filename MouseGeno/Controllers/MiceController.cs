@@ -80,7 +80,7 @@ namespace MouseGeno.Controllers
             ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Name", mouse.LineID);
             ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK1ID);
             ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK2ID);
-            return RedirectToRoute("Line", "Index");
+            return RedirectToAction("Details", "Lines", new { id = mouse.LineID });
         }
 
         // GET: Mice/Edit/5

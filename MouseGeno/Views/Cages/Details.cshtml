@@ -1,9 +1,78 @@
 ﻿@model MouseGeno.Models.ViewModels.CageDetailsViewModel
 
+<div class="row">
+    <div class="col-md-3 container">
+        <h3>Cage # @Model.Cage.CageNumber</h3>
+        <p>Cubicle: @Model.Cage.Cubicle</p>
+        <br />
+    </div>
+    <div class="col-md-8 container">
+        @*DisplayChart*@
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <div id="chartContainer" style="height: 300px; width: 100%;">
+            <script type="text/javascript">
+                var data
+                window.onload = function () {
+                    var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            title: {
+                                text: "Weight Of Mice in Cage # @Model.Cage.CageNumber (g)"
+                            },
+                            axisX: {
+                                valueFormatString: "DD-MMM",
+                                labelAngle: -50
+                            },
+                            legend: {
+                                horizontalAlign: "left",
+                                verticalAlign: "center",
+                                fontSize: 15
+                            },
+                            data: [
+                            @for (var n = 0; n < Model.MiceInCage.Count(); n++)
+                            {
 
-<h3>Cage # @Model.Cage.CageNumber</h3>
-<p>Cubicle: @Model.Cage.Cubicle</p>
-<br />
+                                <text>
+                                {
+                                    type: "line",
+                                    legendText: "@Model.MiceInCage[@n].EarTag",
+                                    showInLegend: true,
+                                    dataPoints: [
+                                    @if(Model.MiceInCage[@n].MouseTasks != null)
+                                    {
+                                        @foreach(MouseTask task in Model.MiceInCage[@n].MouseTasks)
+                                        {
+
+                                            <text>
+                                            { x: new Date(@task.Date.Year , @task.Date.Month , @task.Date.Day) , y: @task.Data }
+                                            </text>
+                                            @if(task != Model.MiceInCage[@n].MouseTasks.Last())
+                                            {
+                                                <text>,</text>
+
+                                            }
+                                            
+                                            
+                                        }
+                                    }
+
+                                    ]
+                                }
+                                @if(n < Model.MiceInCage.Count() - 1)
+                                    {
+                                        <text>,</text>
+                                    }
+                                </text>
+                            }
+
+                            ]
+                        });
+
+                    chart.render();
+                }
+            </script>  
+        </div>
+    </div>
+</div>
 <h4>Current Mice</h4>
 <table class="table">
     <thead>
@@ -143,4 +212,3 @@
     }
 
 </div>
-
