@@ -85,8 +85,14 @@ namespace MouseGeno.Controllers
                 && mc.CageID == id
                 select m).Include(m => m.PK1).Include(m => m.PK2).Include(m => m.Line).ToList();
 
+
             foreach(Mouse mouse in miceInCage )
             {
+                List<MouseTask> mouseTasks = _context.MouseTask.Where(mt => mt.MouseID == mouse.MouseID).ToList();
+                if(mouseTasks.Count() !=0)
+                {
+                    mouse.MouseTasks = mouseTasks;
+                }
                 if(mouse.DadID != null)
                 {
                     mouse.Dad = _context.Mouse.Single(m => m.MouseID == mouse.DadID);
@@ -261,15 +267,22 @@ namespace MouseGeno.Controllers
         public IActionResult CageAssign (CageAssignViewModel model)
         {
             Mouse mouse = _context.Mouse.Single(m => m.MouseID == model.MouseID);
-            Cage currentCage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID);
+            
 
-            if(currentCage != null)
+            if(mouse.MouseCages != null)
             {
-                MouseCage oldMouseCage = _context.MouseCage.Single(mc => mc.MouseID == model.MouseID && mc.CageID == currentCage.CageID && mc.EndDate == null);
-                oldMouseCage.EndDate = model.Date;
-                _context.MouseCage.Update(oldMouseCage);
-            }
+                if (mouse.MouseCages.Any(mc => mc.EndDate != null))
+                {
+                    Cage currentCage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID);
+                    if(currentCage != null)
+                    {
+                        MouseCage oldMouseCage = _context.MouseCage.Single(mc => mc.MouseID == model.MouseID && mc.CageID == currentCage.CageID && mc.EndDate == null);
+                        oldMouseCage.EndDate = model.Date;
+                        _context.MouseCage.Update(oldMouseCage);
+                    }
 
+                }
+            }
            _context.MouseCage.Add(
                 new MouseCage
                 {
