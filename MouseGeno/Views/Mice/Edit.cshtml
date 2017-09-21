@@ -3,83 +3,86 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h2>Edit</h2>
-
-<h4>Mouse</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container">
+    <h2 class="themeFont">Edit Mouse</h2>
+    <br />
+    <div class="row">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MouseID" />
-            <div class="form-group">
-                <label asp-for="EarTag" class="control-label"></label>
-                <input asp-for="EarTag" class="form-control" />
-                <span asp-validation-for="EarTag" class="text-danger"></span>
+            <div class="col-md-4 container clearBackground">
+                <h3>Identifiers</h3>
+                <hr />
+                
+                <div class="form-group">
+                    <label asp-for="EarTag" class="control-label"></label>
+                    <input asp-for="EarTag" class="form-control" />
+                    <span asp-validation-for="EarTag" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ToeClip" class="control-label"></label>
+                    <input asp-for="ToeClip" class="form-control" />
+                    <span asp-validation-for="ToeClip" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sex" class="control-label"></label>
+                    <select asp-for="Sex" class="form-control" asp-items="ViewBag.Sex">
+                        <option asp-for="Sex" value="M">&#9794; M </option>
+                        <option asp-for="Sex" value="F">&#9792; F </option>
+                    </select>
+                    
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birth" class="control-label"></label>
+                    <input asp-for="Birth" class="form-control" />
+                    <span asp-validation-for="Birth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Death" class="control-label"></label>
+                    <input asp-for="Death" class="form-control" />
+                    <span asp-validation-for="Death" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LineID" class="control-label"></label>
+                    <select asp-for="LineID" class="form-control" asp-items="ViewBag.LineID"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-default" />
+                </div>
+
+
             </div>
-            <div class="form-group">
-                <label asp-for="ToeClip" class="control-label"></label>
-                <input asp-for="ToeClip" class="form-control" />
-                <span asp-validation-for="ToeClip" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
-                <input asp-for="Sex" class="form-control" />
-                <span asp-validation-for="Sex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Birth" class="control-label"></label>
-                <input asp-for="Birth" class="form-control" />
-                <span asp-validation-for="Birth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Death" class="control-label"></label>
-                <input asp-for="Death" class="form-control" />
-                <span asp-validation-for="Death" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LineID" class="control-label"></label>
-                <select asp-for="LineID" class="form-control" asp-items="ViewBag.LineID"></select>
-                <span asp-validation-for="LineID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MomID" class="control-label"></label>
-                <input asp-for="MomID" class="form-control" />
-                <span asp-validation-for="MomID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DadID" class="control-label"></label>
-                <input asp-for="DadID" class="form-control" />
-                <span asp-validation-for="DadID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PK1ID" class="control-label"></label>
-                <select asp-for="PK1ID" class="form-control" asp-items="ViewBag.PK1ID"></select>
-                <span asp-validation-for="PK1ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PK2ID" class="control-label"></label>
-                <select asp-for="PK2ID" class="form-control" asp-items="ViewBag.PK2ID"></select>
-                <span asp-validation-for="PK2ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="SynCre" /> @Html.DisplayNameFor(model => model.SynCre)
-                    </label>
+            <div class="col-md-6 col-md-offset-1 clearBackground container">
+                <h3>GenoType</h3>
+                <hr />
+                <div class="row container">
+
+                    <div class="form-group col-md-2 container">
+                        <label asp-for="PK1ID" class="control-label"></label>
+                        <select asp-for="PK1ID" class="form-control" asp-items="ViewBag.PK1ID"></select>
+                    </div>
+                    <div class="form-group col-md-2 container">
+                        <label asp-for="PK2ID" class="control-label"></label>
+                        <select asp-for="PK2ID" class="form-control" asp-items="ViewBag.PK2ID"></select>
+                    </div>
+                    <div class="form-group col-md-2 container">
+                        <label asp-for="SynCre" class="control-lable"></label>
+                        <select asp-for="SynCre" class="form-control" asp-items="ViewBag.SynCre">
+                            <option asp-for="SynCre" value=true> + </option>
+                            <option asp-for="SynCre" value=false> - </option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+
         </form>
+
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

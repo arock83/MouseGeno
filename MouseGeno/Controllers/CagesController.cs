@@ -88,7 +88,7 @@ namespace MouseGeno.Controllers
 
             foreach(Mouse mouse in miceInCage )
             {
-                List<MouseTask> mouseTasks = _context.MouseTask.Where(mt => mt.MouseID == mouse.MouseID).ToList();
+                List<MouseTask> mouseTasks = _context.MouseTask.Where(mt => mt.MouseID == mouse.MouseID).OrderBy(mt => mt.Date).ToList();
                 if(mouseTasks.Count() !=0)
                 {
                     mouse.MouseTasks = mouseTasks;
@@ -230,26 +230,48 @@ namespace MouseGeno.Controllers
         public IActionResult CageAssign(int mouseID)
         {
             Mouse mouse = _context.Mouse.Single(m => m.MouseID == mouseID);
+            if(mouse.PK1ID != null)
+            {
+                mouse.PK1 = _context.GeneExpression.Single(g => g.GeneExpressionID == mouse.PK1ID);
+            }
+            if (mouse.PK2ID != null)
+            {
+                mouse.PK2 = _context.GeneExpression.Single(g => g.GeneExpressionID == mouse.PK2ID);
+            }
+            if(mouse.MomID != null)
+            {
+                mouse.Mom = _context.Mouse.Single(m => m.MouseID == mouse.MomID);
+            }
+            if (mouse.DadID != null)
+            {
+                mouse.Dad = _context.Mouse.Single(m => m.MouseID == mouse.DadID);
+            }
 
             Cage currentCage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.SingleOrDefault(mc => mc.MouseID == mouseID && mc.EndDate == null).CageID);
 
-            List<Cage> allCages = _context.Cage.ToList();
-            List<MouseCage> allMouseCage = _context.MouseCage.ToList();
-            List<Cage> allBreederCages = allCages.Where(c => c.Breeding == true).ToList();
-            List<Cage> allStandardCages = allCages.Where(c => c.Breeding == false).ToList();
-            List<Cage> usedBreederCages = (
-                    from c in allBreederCages
-                    from mc in allMouseCage
-                    where mc.EndDate == null
-                    && c.CageID == mc.CageID
-                    select c).ToList();
-            List<Cage> notUsedBreederCages = allBreederCages.Except(usedBreederCages).ToList();
             List<Cage> usedStandardCages = (
-                    from c in allStandardCages
-                    join mc in allMouseCage on c.CageID equals mc.CageID
-                    where mc.EndDate != null
-                    select c).ToList();
+                from c in _context.Cage
+                join mc in _context.MouseCage on c.CageID equals mc.CageID
+                where c.Breeding == false
+                && mc.EndDate == null
+                select c 
+                ).Distinct().ToList();
+
+            List<Cage> usedBreederCages = (
+                from c in _context.Cage
+                from mc in _context.MouseCage
+                where c.Breeding == true
+                && c.CageID == mc.CageID
+                && mc.EndDate == null
+                select c
+                ).Distinct().ToList();
+
+            List<Cage> allBreederCages = _context.Cage.Where(c => c.Breeding == true).ToList();
+            List<Cage> allStandardCages = _context.Cage.Where(c => c.Breeding == false).ToList();
+            List<Cage> notUsedBreederCages = allBreederCages.Except(usedBreederCages).ToList();
             List<Cage> notUsedStandardCages = allStandardCages.Except(usedStandardCages).ToList();
+
+
             CageAssignViewModel model = new CageAssignViewModel
             {
                 Mouse = mouse,

@@ -1,88 +1,221 @@
 ﻿@model MouseGeno.Models.ViewModels.CageAssignViewModel
 
-@if (Model.Mouse.EarTag != null)
-{
-    <h2>Assign Cage to Mouse # @Model.Mouse.EarTag</h2>
-}
-else if (Model.Mouse.ToeClip != null)
-{
-    <h2>Assign Cage to Mouse # @Model.Mouse.ToeClip</h2>
-} else
-{
-    <h2>No Mouse Selected to Assign a Cage to!</h2>
-}
-@if (Model.CurrentCage != null)
-{
-    <p>Mouse is currently in Cage # @Model.CurrentCage.CageNumber</p>
-} else
-{
-    <p>Mouse is currently not in a cage</p>
 
-}
-<form asp-action="CageAssign">
-    <div class="row container">
-        <h4>Pick a Date Mouse was Assigned</h4>
-        <input type="date" asp-for="Date" />
-    </div>
-    @if (Model.UsedBreederCages.Count() > 0)
-    {
-    <h4>Currently Used Breeder Cages</h4>
-        <div class="row container">
-            @foreach (Cage cage in Model.UsedBreederCages)
-            {
+<div class="container">
+    <div class="container themeFont">
 
-                <div class="container col-md-2">
-                    <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="NewCageID" />
-                </div>
-
-            }
+        @if (Model.Mouse.EarTag != null)
+        {
+            <h2>Assign Cage to Mouse # @Model.Mouse.EarTag</h2>
+        }
+        else if (Model.Mouse.ToeClip != null)
+        {
+            <h2>Assign Cage to Mouse # @Model.Mouse.ToeClip</h2>
+        }
+        else
+        {
+            <h2>No Mouse Selected to Assign a Cage to!</h2>
+        }
         </div>
-    }
+        <div class="container themeFont">
+        @if (Model.CurrentCage != null)
+        {
+            <h3>Mouse is currently in Cage # @Model.CurrentCage.CageNumber</h3>
+        }
+        else
+        {
+            <h3>Mouse is currently not in a cage</h3>
+
+        }
+        </div>
+    <div class="container clearBackground">
+    <h2>Mouse Details</h2>
+    <hr />
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.EarTag)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.ToeClip)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Sex)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Birth)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Death)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Mom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Dad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.PK1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.PK2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.SynCre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Line)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.ToeClip)
+                        </td>
+                        <td>
+                            @if (Model.Mouse.Sex == "F")
+                            {
+                                <p><strong>&#9792; F</strong></p>
+                            }
+                            else if (Model.Mouse.Sex == "M")
+                            {
+                                <p><strong>&#9794; M</strong></p>
+
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Birth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Death)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Mom.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Dad.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.PK1.ShortHand)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.PK2.ShortHand)
+                        </td>
+                        <td>
+                            @if (Model.Mouse.SynCre == true)
+                            {
+                                <p> + </p>
+
+                            }
+                            else if (Model.Mouse.SynCre == false)
+                            {
+                                <p> - </p>
+
+                            }
+                            else
+                            {
+                                <p> </p>
+
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Line.Name)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Pick a Date the Mouse was transfered</h4>
+        <input type="date" name="Date" asp-for="Date" form="cageForm"/>
+        <br />
+        <br />
+    </div>
     @if (Model.UsedStandardCages.Count() > 0)
     {
-    <h4>Currently Used Standard Cage</h4>
-        <div class="row container">
-            @foreach (Cage cage in Model.UsedStandardCages)
-            {
-                <div class="container col-md-2">
-                    <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="NewCageID" />
-                </div>
-            }
+        <div class="container clearBackground">
+            <h4>Currently Used Standard Cages</h4>
+            <hr />
+            <div class="row">
+                @foreach (Cage cage in Model.UsedStandardCages)
+                {
+                    <div class="col-md-2">
+                        <form asp-action="CageAssign" id="cageForm">
+                            <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
+                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
+                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                        </form>
+                    </div>
+                }
+            </div>
         </div>
     }
-    @if (Model.NotUsedBreederCages.Count() > 0)
+    @if (Model.UsedBreederCages.Count() > 0)
     {
-        <h4>Unusered Breeder Cages</h4>
-        <div class="row container">
-            @foreach (Cage cage in Model.NotUsedBreederCages)
-            {
-
-                <div class="container col-md-2">
-                    <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="NewCageID" />
-                </div>
-            }
+        <div class="container clearBackground">
+            <h4>Currently Used Breeding Cages</h4>
+            <hr />
+            <div class="row">
+                @foreach (Cage cage in Model.UsedBreederCages)
+                {
+                    <div class="col-md-2">
+                        <form asp-action="CageAssign" id="cageForm">
+                            <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
+                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
+                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                        </form>
+                    </div>
+                }
+            </div>
         </div>
     }
     @if (Model.NotUsedStandardCages.Count() > 0)
     {
-        <h4>Un-Used Breeder Cages</h4>
-        <div class="row container">
-            @foreach (Cage cage in Model.NotUsedStandardCages)
-            {
-                <div class="container col-md-2">
-                    <label name="cageID">@cage.CageNumber</label>
-                    <input type="radio" value="@cage.CageID" asp-for="NewCageID"/>
-                </div>
-            }
+        <div class="container clearBackground">
+            <h4>Currently Empty Standard Cages</h4>
+            <hr />
+            <div class="row">
+                @foreach (Cage cage in Model.NotUsedStandardCages)
+                {
+                    <div class="col-md-2">
+                        <form asp-action="CageAssign" id="cageForm">
+                            <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
+                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
+                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    @if (Model.NotUsedBreederCages.Count() > 0)
+    {
+        <div class="container clearBackground">
+            <h4>Currently Empty Breeding Cages</h4>
+            <hr />
+            <div class="row">
+                @foreach (Cage cage in Model.NotUsedBreederCages)
+                {
+                    <div class="col-md-2">
+                        <form asp-action="CageAssign" id="cageForm">
+                            <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
+                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
+                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                        </form>
+                    </div>
+                }
+            </div>
         </div>
     }
     
-    <input type="hidden" asp-for="MouseID" value="@Model.Mouse.MouseID" />
-    <input type="hidden" asp-for="CurrentCageID" value="@Model.CurrentCageID" />
-    <div class="form-group">
-        <input type="submit" value="Assign" class="btn btn-default" />
-    </div>
-</form>
+</div>

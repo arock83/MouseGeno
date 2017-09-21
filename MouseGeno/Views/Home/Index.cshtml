@@ -4,37 +4,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="jumbotron">
-
-</div>
-<div class="container row">
-    <div class="col-md-3 container">
-        <h3>Mouse Lines</h3>
-        <br />
-        @foreach (var line in Model.Lines)
-        {
-
-            <a asp-controller="Lines" asp-action="Details" asp-route-id="@line.LineID">
-                <h4>@line.Name</h4>
-                <p>@line.Description</p>
-            </a>
-            <hr />
-
-        }
+    <div>
+        <div class="contatiner row">
+            <div class="col-md-offset-2 col-md-4">
+                <br />
+                <br />
+                <br />
+                <h1 class="themeFont"><strong><i class="material-icons" style="font-size:54px;color:lightgray">adb</i>MouseGeno</strong></h1>
+                <h1 class="themeFont"><strong>Colony</strong></h1>
+                <h1 class="themeFont"><strong>Management</strong></h1>
+            </div>
+        </div>
     </div>
+    <div class="container">
+        <div class="container row">
+            <div class="col-md-3 container clearBackground">
+                <h3><strong>Mouse Lines</strong></h3>
+                <hr />
+                @foreach (var line in Model.Lines)
+                {
 
-    <div class="col-md-6 container">
-        <h3>Upcoming Tasks</h3>
+                    <a asp-controller="Lines" asp-action="Details" asp-route-id="@line.LineID">
+                        <h4>@line.Name</h4>
+                        <p>@line.Description</p>
+                    </a>
+                    <br />
 
+                }
+            </div>
+
+            <div class="col-md-3 col-md-offset-1 clearBackground">
+                <h3><strong>Upcoming Tasks</strong></h3>
+                <hr />
+                <p>Coming Soon!!</p>
+
+            </div>
+
+            <div class="col-md-3 col-md-offset-1 container clearBackground">
+                <h3><strong>Mouse News</strong></h3>
+                <hr />
+                <p>Coming Soon!!</p>
+            </div>
+
+
+        </div>
     </div>
-
-    <div class="col-md-3 container">
-        <h3>Mouse News</h3>
-    </div>
-
-
-</div>
-
 
 
 

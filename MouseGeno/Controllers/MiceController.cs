@@ -43,14 +43,21 @@ namespace MouseGeno.Controllers
             var mouse = await _context.Mouse
                 .Include(m => m.Line)
                 .Include(m => m.PK1)
-                .Include(m => m.PK2)
+                .Include(m => m.PK2).Include(m => m.MouseCages)
                 .SingleOrDefaultAsync(m => m.MouseID == id);
             if (mouse == null)
             {
                 return NotFound();
             }
+            Cage cage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.SingleOrDefault(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID);
 
-            return View(mouse);
+            MouseDetailsViewModel model = new MouseDetailsViewModel
+            {
+                Mouse = mouse,
+                Cage = cage
+            };
+
+            return View(model);
         }
 
         // GET: Mice/Create
@@ -96,9 +103,9 @@ namespace MouseGeno.Controllers
             {
                 return NotFound();
             }
-            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Description", mouse.LineID);
-            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName", mouse.PK1ID);
-            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName", mouse.PK2ID);
+            ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Name", mouse.LineID);
+            ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK1ID);
+            ViewData["PK2ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK2ID);
             return View(mouse);
         }
 
@@ -134,7 +141,7 @@ namespace MouseGeno.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Lines", new { id = mouse.LineID});
             }
             ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Description", mouse.LineID);
             ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "FullName", mouse.PK1ID);
@@ -171,7 +178,7 @@ namespace MouseGeno.Controllers
             var mouse = await _context.Mouse.SingleOrDefaultAsync(m => m.MouseID == id);
             _context.Mouse.Remove(mouse);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Lines", new { id = mouse.LineID });
         }
 
         private bool MouseExists(int id)

@@ -1,23 +1,36 @@
 ﻿@model MouseGeno.Models.ViewModels.CageDetailsViewModel
 
-<div class="row">
-    <div class="col-md-3 container">
-        <h3>Cage # @Model.Cage.CageNumber</h3>
-        <p>Cubicle: @Model.Cage.Cubicle</p>
-        <br />
-    </div>
-    <div class="col-md-8 container">
-        @*DisplayChart*@
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <div id="chartContainer" style="height: 300px; width: 100%;">
-            <script type="text/javascript">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 container clearBackground">
+            <h3>Cage # @Model.Cage.CageNumber</h3>
+            <hr />
+            <div class="conditionList">
+                <p>Cubicle: @Model.Cage.Cubicle</p>
+                <span class="glyphicon glyphicon-tint water"></span><p class="water"> : Standard</p><br />
+                <span class="glyphicon glyphicon-cutlery food"></span><p class="food"> : Standard</p><br />
+                <span class="glyphicon glyphicon-bed bedding"></span><p class="bedding"> : Standard</p><br />
+                <span class="glyphicon glyphicon-fire heat"></span><p class="heat"> : None</p>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-1 container clearBackground">
+            @*DisplayChart*@
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            <div id="chartContainer" style="height: 300px; width: 100%;">
+                <script type="text/javascript">
                 var data
                 window.onload = function () {
                     var chart = new CanvasJS.Chart("chartContainer",
                         {
                             title: {
-                                text: "Weight Of Mice in Cage # @Model.Cage.CageNumber (g)"
+                                text: "Weight Of Mice in Cage # @Model.Cage.CageNumber (g)",
+                                fontColor: "#842927"
                             },
+                            animationEnabled: true,
+                            backgroundColor: "lightgrey",
+                            exportEnabled: true,
+                            exportFileName: "Cage_@Model.Cage.CageNumber",
                             axisX: {
                                 valueFormatString: "DD-MMM",
                                 labelAngle: -50
@@ -25,7 +38,17 @@
                             legend: {
                                 horizontalAlign: "left",
                                 verticalAlign: "center",
-                                fontSize: 15
+                                fontSize: 15,
+                                cursor: "pointer",
+                                itemclick: function (e) {
+                                    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                        e.dataSeries.visible = false;
+                                    } else {
+                                        e.dataSeries.visible = true;
+                                    }
+
+                                    e.chart.render();
+                                }
                             },
                             data: [
                             @for (var n = 0; n < Model.MiceInCage.Count(); n++)
@@ -33,8 +56,13 @@
 
                                 <text>
                                 {
-                                    type: "line",
-                                    legendText: "@Model.MiceInCage[@n].EarTag",
+                                    type: "spline",
+                                    @if (Model.MiceInCage[@n].EarTag != null)
+                                    {
+                                        <text>legendText: "@Model.MiceInCage[@n].EarTag",</text>
+                                    } else {
+                                        <text>legendText: "@Model.MiceInCage[@n].ToeClip",</text>
+                                    }
                                     showInLegend: true,
                                     dataPoints: [
                                     @if(Model.MiceInCage[@n].MouseTasks != null)
@@ -50,8 +78,6 @@
                                                 <text>,</text>
 
                                             }
-                                            
-                                            
                                         }
                                     }
 
@@ -69,146 +95,165 @@
 
                     chart.render();
                 }
-            </script>  
+                </script>
+            </div>
         </div>
     </div>
-</div>
-<h4>Current Mice</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                EarTag
-            </th>
-            <th>
-                ToeClip
-            </th>
-            <th>
-                Sex
-            </th>
-            <th>
-                Birth
-            </th>
-            <th>
-                Mom
-            </th>
-            <th>
-                Dad
-            </th>
-            <th>
-                PK1
-            </th>
-            <th>
-                PK2
-            </th>
-            <th>
-                SynCre
-            </th>
-            <th>
-                Line
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Mouse mouse in Model.MiceInCage)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.EarTag)
-                </td>
-                <td>
-                    @if (mouse.ToeClip == null)
-                    {
-                        <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => mouse.ToeClip)
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.Sex)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.Birth)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.Mom.EarTag)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.Dad.EarTag)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
-                </td>
-                <td>
-                    @if (mouse.SynCre == true)
-                    {
-                        <p> + </p>
-                    }
-                    else if (mouse.SynCre == false)
-                    {
-                        <p> - </p>
-                    }
-                    else
-                    {
-                        <p> </p>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => mouse.Line.Name)
-                </td>
-
-                <td>
-                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
-                    <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
-                    <a asp-controller="Mice" asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div class="container">
-    <h4>Actions</h4>
-    
-    @if(Model.Cage.Breeding == true && Model.MiceInCage.Where(m => m.Sex == "F").Count() > 0 && Model.MiceInCage.Where(m => m.Sex == "M").Count() > 0)
-    {
-        <form>
-            <select name="numOfPups">
-                <option value="1" name="numOfPups">1</option>
-                <option value="2" name="numOfPups">2</option>
-                <option value="3" name="numOfPups">3</option>
-                <option value="4" name="numOfPups">4</option>
-                <option value="5" name="numOfPups">5</option>
-                <option value="6" name="numOfPups">6</option>
-                <option value="7" name="numOfPups">7</option>
-                <option value="8" name="numOfPups">8</option>
-                <option value="9" name="numOfPups">9</option>
-                <option value="10" name="numOfPups">10</option>
-            </select>
-            <input type="hidden" value="@Model.Cage.CageID" name="cageID"/>
-            <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born"/>
-        </form>
-    }
-    <br />
-    @if(Model.MiceInCage.Count() > 0)
-    {
-        <div class="container row"> 
-            @foreach(TaskType task in Model.Actions)
+    <div class="row">
+        <div class="clearBackground container">
+            
+            <h3>Current Mice</h3>
+            <hr />
+            <table class="table" style="background-color: lightgray;">
+                <thead>
+                    <tr>
+                        <th>
+                            EarTag
+                        </th>
+                        <th>
+                            ToeClip
+                        </th>
+                        <th>
+                            Sex
+                        </th>
+                        <th>
+                            Birth
+                        </th>
+                        <th>
+                            Mom
+                        </th>
+                        <th>
+                            Dad
+                        </th>
+                        <th>
+                            PK1
+                        </th>
+                        <th>
+                            PK2
+                        </th>
+                        <th>
+                            SynCre
+                        </th>
+                        <th>
+                            Line
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Mouse mouse in Model.MiceInCage)
             {
-                <div class="col-md-2 container">
-                    <form>
-                        <input type="hidden" value="@Model.Cage.CageID" name="cageID"/>
-                        <input type="hidden" value="@task.TaskTypeID" name="taskID" />
-                        <input type="submit" asp-controller="TaskTypes" asp-action="TaskOnCage" value="@task.Name" />
-                    </form>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.EarTag)
+                            </td>
+                            <td>
+                                @if (mouse.ToeClip == null)
+                                {
+                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => mouse.ToeClip)
+                                }
+                            </td>
+                            <td>
+                                @if (mouse.Sex == "F")
+                                {
+                                    <p><strong>&#9792; F</strong></p>
+                                }
+                                else if (mouse.Sex == "M")
+                                {
+                                    <p><strong>&#9794; M</strong></p>
+
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.Birth)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.Mom.EarTag)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.Dad.EarTag)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
+                            </td>
+                            <td>
+                                @if (mouse.SynCre == true)
+                                {
+                                    <p> + </p>
+                                }
+                                else if (mouse.SynCre == false)
+                                {
+                                    <p> - </p>
+                                }
+                                else
+                                {
+                                    <p> </p>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.Line.Name)
+                            </td>
+
+                            <td>
+                                <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container clearBackground actions">
+            <h4>Actions</h4>
+            <hr />
+            @if (Model.Cage.Breeding == true && Model.MiceInCage.Where(m => m.Sex == "F").Count() > 0 && Model.MiceInCage.Where(m => m.Sex == "M").Count() > 0)
+            {
+                <form>
+                    <select name="numOfPups">
+                        <option value="1" name="numOfPups">1</option>
+                        <option value="2" name="numOfPups">2</option>
+                        <option value="3" name="numOfPups">3</option>
+                        <option value="4" name="numOfPups">4</option>
+                        <option value="5" name="numOfPups">5</option>
+                        <option value="6" name="numOfPups">6</option>
+                        <option value="7" name="numOfPups">7</option>
+                        <option value="8" name="numOfPups">8</option>
+                        <option value="9" name="numOfPups">9</option>
+                        <option value="10" name="numOfPups">10</option>
+                    </select>
+                    <input type="hidden" value="@Model.Cage.CageID" name="cageID" />
+                    <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born" />
+                </form>
+            }
+            <br />
+            @if (Model.MiceInCage.Count() > 0)
+            {
+                <div class="container row">
+                    
+                    <div class="col-md-2 container">
+                       <form>
+                           <input type="hidden" value="@Model.Cage.CageID" name="cageID" />
+                           <input type="hidden" value="@Model.Actions.Single(a => a.Name == "Weigh Mouse").TaskTypeID" name="taskID" />
+                           <input type="submit" asp-controller="TaskTypes" asp-action="TaskOnCage" value="Weigh Mice in Cage" class="custBtn"/>
+                       </form>
+                    </div>
+                    <div class="col-md-2 container">
+                        <button class="custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.MiceInCage[0].LineID })'">
+                            <p>Back to Line </p>
+                        </button>
+                    </div>
                 </div>
             }
+            <hr />
         </div>
-    }
-
+    </div>
 </div>
