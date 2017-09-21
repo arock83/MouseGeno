@@ -1,132 +1,149 @@
 ﻿@model MouseGeno.Models.ViewModels.LineDetailsViewModel
 
 
-<h2>@Model.Line.Name</h2>
-<p>@Model.Line.Description</p>
-
-<div class="row container">
-    <div class="container col-md-3">
-        <a asp-controller="Cages" asp-action="Index" asp-route-lineID="@Model.Line.LineID">
-            <h3>Current Cages</h3>
-        </a>
-        <br />
-        @foreach (Cage cage in Model.Cages)
-        {
-            <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
-                <h4>@cage.CageNumber</h4>
-            </a>
-            <p>Cubicle: @cage.Cubicle</p>
-            <br />
-
-        }
-
+<br />
+<div class="container">
+    <div class="themeFont">
+        <h2><strong>@Model.Line.Name</strong></h2>
+        <p><strong>@Model.Line.Description</strong></p>
     </div>
-    <div class="container col-md-9">
-        <h3>Current Mice</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        EarTag
-                    </th>
-                    <th>
-                        ToeClip
-                    </th>
-                    <th>
-                        Sex
-                    </th>
-                    <th>
-                        Birth
-                    </th>
-                    <th>
-                        Death
-                    </th>
-                    <th>
-                        Cage#
-                    </th>
-                    <th>
-                        PK1
-                    </th>
-                    <th>
-                        PK2
-                    </th>
-                    <th>
-                        SynCre
-                    </th>
-                    <th>
-                        <a asp-controller="Mice" asp-action="Create">Create New</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Mouse mouse in Model.Mice)
+    <div class="row container">
+        <div class="container col-md-3 clearBackground">
+            <h2>Current Cages</h2>
+            <hr />
+            @if(Model.Cages.Any(c => c.Breeding == true))
+            {
+                <h3>Breeding</h3>
+                <hr />
+                @foreach (Cage cage in Model.Cages.Where(c => c.Breeding == true))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.EarTag)
-                        </td>
-                        <td>
-                            @if(mouse.ToeClip == null)
-                            {
-                                <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
-                            } else
-                            {
-                                @Html.DisplayFor(modelItem => mouse.ToeClip)
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.Sex)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.Birth)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.Death)
-                        </td>
-                        <td>
-                            @if(mouse.MouseCages.Count() == 0 || mouse.MouseCages.All(mc => mc.EndDate != null))
-                            {
-                                <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID">[Assign]</a>
-
-                            } else
-                            {
-                                @Model.Cages.Single(c => c.CageID == mouse.MouseCages.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID).CageNumber
-                            }
-                            
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
-                        </td>
-                        <td>
-                            @if(mouse.SynCre == true)
-                            {
-                                <p> + </p>
-
-                            } else if(mouse.SynCre == false)
-                            {
-                                <p> - </p>
-
-                            } else
-                            {
-                                <p> </p>
-
-                            }
-
-                        </td>
-                        <td>
-                            <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID">Edit</a> |
-                            <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID">Details</a> |
-                            <a asp-controller="Mice" asp-action="Delete" asp-route-id="@mouse.MouseID">Delete</a>
-                        </td>
-                    </tr>
-
+                    <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
+                        <h4>@cage.CageNumber</h4>
+                    </a>
                 }
-            </tbody>
-            
-        </table>
+            }
+            @if (Model.Cages.Any(c => c.Breeding == false))
+            {
+                <h3>Standard</h3>
+                <hr />
+                @foreach (Cage cage in Model.Cages.Where(c => c.Breeding ==false))
+                {
+                    <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
+                        <h4>@cage.CageNumber</h4>
+                    </a>
+                    <br />
+                }
+            }
+
+        </div>
+        <div class="container col-md-8 col-md-offset-1 clearBackground">
+            <h2>Current Mice</h2>
+            <hr />
+            <table class="table" background="lightgray">
+                <thead>
+                    <tr>
+                        <th>
+                            EarTag
+                        </th>
+                        <th>
+                            ToeClip
+                        </th>
+                        <th>
+                            Sex
+                        </th>
+                        <th>
+                            Birth
+                        </th>
+                        <th>
+                            Cage#
+                        </th>
+                        <th>
+                            PK1
+                        </th>
+                        <th>
+                            PK2
+                        </th>
+                        <th>
+                            SynC
+                        </th>
+                        <th>
+                            <button asp-controller="Mice" asp-action="Create" class="custBtn" onclick="location.href='@Url.Action("Create", "Mice")'">
+                                <span class="glyphicon glyphicon-plus"></span><i class="material-icons" style="font-size: 14pt;">adb</i>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Mouse mouse in Model.Mice)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.EarTag)
+                            </td>
+                            <td>
+                                @if (mouse.ToeClip == null)
+                                {
+                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => mouse.ToeClip)
+                                }
+                            </td>
+                            <td>
+                                @if(mouse.Sex == "F")
+                                {
+                                    <p><strong>&#9792; F</strong></p>
+                                } else if(mouse.Sex == "M")
+                                {
+                                    <p><strong>&#9794; M</strong></p>
+
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.Birth)
+                            </td>
+                            <td>
+                                @if (mouse.MouseCages.Count() == 0 || mouse.MouseCages.All(mc => mc.EndDate != null))
+                                {
+                                    <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID">[Assign]</a>
+                                }
+                                else
+                                {
+                                    @Model.Cages.Single(c => c.CageID == mouse.MouseCages.Single(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID).CageNumber
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => mouse.PK2.ShortHand)
+                            </td>
+                            <td>
+                                @if (mouse.SynCre == true)
+                                {
+                                    <p> + </p>
+                                }
+                                else if (mouse.SynCre == false)
+                                {
+                                    <p> - </p>
+                                }
+                                else
+                                {
+                                    <p> </p>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a asp-controller="Mice" asp-action="Details" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+        </div>
     </div>
 </div>
 
