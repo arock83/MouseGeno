@@ -29,7 +29,7 @@
         }
         </div>
     <div class="container clearBackground">
-    <h2>Mouse Details</h2>
+    <h2><strong>Mouse Details</strong></h2>
     <hr />
         <div>
             <table class="table">
@@ -140,7 +140,7 @@
     @if (Model.UsedStandardCages.Count() > 0)
     {
         <div class="container clearBackground">
-            <h4>Currently Used Standard Cages</h4>
+            <h4><strong>Currently Used Standard Cages in Line</strong></h4>
             <hr />
             <div class="row">
                 @foreach (Cage cage in Model.UsedStandardCages)
@@ -150,7 +150,7 @@
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
                             <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
-                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                            <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
                     </div>
                 }
@@ -160,7 +160,7 @@
     @if (Model.UsedBreederCages.Count() > 0)
     {
         <div class="container clearBackground">
-            <h4>Currently Used Breeding Cages</h4>
+            <h4><strong>Currently Used Breeding Cages in Line</strong></h4>
             <hr />
             <div class="row">
                 @foreach (Cage cage in Model.UsedBreederCages)
@@ -170,7 +170,7 @@
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
                             <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
-                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                            <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
                     </div>
                 }
@@ -180,7 +180,7 @@
     @if (Model.NotUsedStandardCages.Count() > 0)
     {
         <div class="container clearBackground">
-            <h4>Currently Empty Standard Cages</h4>
+            <h4><strong>Currently Empty Standard Cages</strong></h4>
             <hr />
             <div class="row">
                 @foreach (Cage cage in Model.NotUsedStandardCages)
@@ -190,7 +190,7 @@
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
                             <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
-                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                            <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
                     </div>
                 }
@@ -200,7 +200,7 @@
     @if (Model.NotUsedBreederCages.Count() > 0)
     {
         <div class="container clearBackground">
-            <h4>Currently Empty Breeding Cages</h4>
+            <h4><strong>Currently Empty Breeding Cages</strong></h4>
             <hr />
             <div class="row">
                 @foreach (Cage cage in Model.NotUsedBreederCages)
@@ -210,7 +210,7 @@
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
                             <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
-                            <input type="submit" value="@cage.CageNumber" class="custBtn" />
+                            <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
                     </div>
                 }

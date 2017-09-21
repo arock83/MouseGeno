@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 container clearBackground">
-            <h3>Cage # @Model.Cage.CageNumber</h3>
+            <h3><strong>Cage # @Model.Cage.CageNumber</strong></h3>
             <hr />
             <div class="conditionList">
-                <p>Cubicle: @Model.Cage.Cubicle</p>
+                <p>Cubicle: B</p>
                 <span class="glyphicon glyphicon-tint water"></span><p class="water"> : Standard</p><br />
                 <span class="glyphicon glyphicon-cutlery food"></span><p class="food"> : Standard</p><br />
                 <span class="glyphicon glyphicon-bed bedding"></span><p class="bedding"> : Standard</p><br />
@@ -102,7 +102,7 @@
     <div class="row">
         <div class="clearBackground container">
             
-            <h3>Current Mice</h3>
+            <h3><strong>Current Mice</strong></h3>
             <hr />
             <table class="table" style="background-color: lightgray;">
                 <thead>
@@ -213,7 +213,7 @@
     </div>
     <div class="row">
         <div class="container clearBackground actions">
-            <h4>Actions</h4>
+            <h3><strong>Actions</strong></h3>
             <hr />
             @if (Model.Cage.Breeding == true && Model.MiceInCage.Where(m => m.Sex == "F").Count() > 0 && Model.MiceInCage.Where(m => m.Sex == "M").Count() > 0)
             {
