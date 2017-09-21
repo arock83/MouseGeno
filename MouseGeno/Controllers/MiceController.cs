@@ -276,8 +276,15 @@ namespace MouseGeno.Controllers
             {
                 return NotFound();
             }
+            Cage cage = _context.Cage.SingleOrDefault(c => c.CageID == _context.MouseCage.SingleOrDefault(mc => mc.EndDate == null && mc.MouseID == mouse.MouseID).CageID);
 
-            return View(mouse);
+            MouseDetailsViewModel model = new MouseDetailsViewModel
+            {
+                Mouse = mouse,
+                Cage = cage
+            };
+
+            return View(model);
         }
 
         // POST: Mice/TerminateConfirmed/5

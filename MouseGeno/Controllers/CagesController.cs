@@ -257,6 +257,15 @@ namespace MouseGeno.Controllers
                 select c 
                 ).Distinct().ToList();
 
+            List<Cage> usedStandardInLine = (
+                from c in usedStandardCages
+                join mc in _context.MouseCage on c.CageID equals mc.CageID
+                join m in _context.Mouse on mc.MouseID equals m.MouseID
+                where mc.EndDate == null
+                && c.Breeding == false
+                && m.LineID == mouse.LineID
+                select c).Distinct().ToList();
+
             List<Cage> usedBreederCages = (
                 from c in _context.Cage
                 from mc in _context.MouseCage
@@ -265,6 +274,16 @@ namespace MouseGeno.Controllers
                 && mc.EndDate == null
                 select c
                 ).Distinct().ToList();
+
+            List<Cage> usedBreedingInLine = (
+                from c in usedStandardCages
+                join mc in _context.MouseCage on c.CageID equals mc.CageID
+                join m in _context.Mouse on mc.MouseID equals m.MouseID
+                where mc.EndDate == null
+                && c.Breeding == true
+                && m.LineID == mouse.LineID
+                select c).Distinct().ToList();
+
 
             List<Cage> allBreederCages = _context.Cage.Where(c => c.Breeding == true).ToList();
             List<Cage> allStandardCages = _context.Cage.Where(c => c.Breeding == false).ToList();

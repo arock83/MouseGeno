@@ -1,93 +1,144 @@
-﻿@model MouseGeno.Models.Mouse
+﻿@model MouseGeno.Models.ViewModels.MouseDetailsViewModel
 
 @{
     ViewData["Title"] = "Delete";
 }
-@if (Model.EarTag != null)
-{
-    <h2>Terminate Mouse # @Model.EarTag</h2>
-} else
-{
-    <h2>Terminste Mouse # @Model.ToeClip</h2>
-}
+<div class="container">
+    <div class="themeFont">
+        @if (Model.Mouse.EarTag != null)
+        {
+            <h2>Terminate Mouse # @Model.Mouse.EarTag</h2>
+        }
+        else
+        {
+            <h2>Terminste Mouse # @Model.Mouse.ToeClip</h2>
+        }
+    </div>
+    <div class="container clearBackground">
+        <h3><strong>Are you sure you want to terminate this mouse?</strong></h3>
+        <hr />
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.EarTag)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.ToeClip)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Sex)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Birth)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Death)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Mom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Dad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.PK1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.PK2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.SynCre)
+                        </th>
+                        <th>
+                            Cage #
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mouse.Line)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.ToeClip)
+                        </td>
+                        <td>
+                            @if (Model.Mouse.Sex == "F")
+                            {
+                                <p><strong>&#9792; F</strong></p>
+                            }
+                            else if (Model.Mouse.Sex == "M")
+                            {
+                                <p><strong>&#9794; M</strong></p>
 
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Birth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Death)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Mom.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Dad.EarTag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.PK1.ShortHand)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.PK2.ShortHand)
+                        </td>
+                        <td>
+                            @if (Model.Mouse.SynCre == true)
+                            {
+                                <p> + </p>
 
-<h3>Are you sure you want to terminate this mouse?</h3>
-<div>
-    <h4>Mouse</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EarTag)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EarTag)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ToeClip)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ToeClip)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Sex)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Sex)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Birth)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Birth)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Death)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Death)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MomID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MomID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DadID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DadID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SynCre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SynCre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Line)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Line.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PK1)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PK1.FullName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PK2)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PK2.FullName)
-        </dd>
-    </dl>
+                            }
+                            else if (Model.Mouse.SynCre == false)
+                            {
+                                <p> - </p>
 
-    <form asp-action="TerminateConfirmed">
-        <input type="date" name="date"/>
-        <input type="submit" value="TerminateConfirmed" class="btn btn-default" asp-action="TerminateConfirmed" asp-route-id="@Model.MouseID" asp-route-date="date"/> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                            }
+                            else
+                            {
+                                <p> </p>
+
+                            }
+                        </td>
+                        <td>
+                            @if (Model.Cage == null)
+                            {
+                                <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@Model.Mouse.MouseID">[Assign]</a>
+
+                            }
+                            else
+                            {
+                                @Model.Cage.CageNumber
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Mouse.Line.Name)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form asp-action="TerminateConfirmed">
+                <input type="date" name="date" />
+                <input type="submit" value="TerminateConfirmed" class="btn btn-default custBtn" asp-action="TerminateConfirmed" asp-route-id="@Model.Mouse.MouseID" asp-route-date="date" />
+            </form>
+            <button class="btn custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.Mouse.LineID })'">
+                <p>Back to Line </p>
+            </button>
+        </div>
+    </div>
 </div>

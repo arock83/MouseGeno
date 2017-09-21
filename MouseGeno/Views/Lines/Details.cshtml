@@ -9,7 +9,7 @@
     </div>
     <div class="row container">
         <div class="container col-md-3 clearBackground">
-            <h2>Current Cages</h2>
+            <h2><strong>Current Cages</strong></h2>
             <hr />
             @if(Model.Cages.Any(c => c.Breeding == true))
             {
@@ -18,7 +18,7 @@
                 @foreach (Cage cage in Model.Cages.Where(c => c.Breeding == true))
                 {
                     <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
-                        <h4>@cage.CageNumber</h4>
+                        <p>@cage.CageNumber</p>
                     </a>
                 }
             }
@@ -29,7 +29,7 @@
                 @foreach (Cage cage in Model.Cages.Where(c => c.Breeding ==false))
                 {
                     <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
-                        <h4>@cage.CageNumber</h4>
+                        <p>@cage.CageNumber</p>
                     </a>
                     <br />
                 }
@@ -37,7 +37,7 @@
 
         </div>
         <div class="container col-md-8 col-md-offset-1 clearBackground">
-            <h2>Current Mice</h2>
+            <h2><strong>Current Mice</strong></h2>
             <hr />
             <table class="table" background="lightgray">
                 <thead>
@@ -67,7 +67,7 @@
                             SynC
                         </th>
                         <th>
-                            <button asp-controller="Mice" asp-action="Create" class="custBtn" onclick="location.href='@Url.Action("Create", "Mice")'">
+                            <button asp-controller="Mice" asp-action="Create" class="btn custBtn" onclick="location.href='@Url.Action("Create", "Mice")'">
                                 <span class="glyphicon glyphicon-plus"></span><i class="material-icons" style="font-size: 14pt;">adb</i>
                             </button>
                         </th>

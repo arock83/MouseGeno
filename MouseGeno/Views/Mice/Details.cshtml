@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 <div class="container clearBackground">
-    <h2>Mouse Details</h2>
+    <h2><strong>Mouse Details</strong></h2>
     <hr />
     <div>
         <table class="table">
@@ -123,19 +123,19 @@
            
     </div>
     <div>
-        <button class="custBtn" onclick="location.href='@Url.Action("Terminate", "Mice", new {mouseID = Model.Mouse.MouseID })'">
+        <button class="btn custBtn" onclick="location.href='@Url.Action("Terminate", "Mice", new {mouseID = Model.Mouse.MouseID })'">
             <p>Terminate </p><i class="material-icons" style="font-size: 14pt;">adb</i>
         </button>
-        <button class="custBtn" onclick="location.href='@Url.Action("CageAssign", "Cages", new {mouseID = Model.Mouse.MouseID })'">
+        <button class="btn custBtn" onclick="location.href='@Url.Action("CageAssign", "Cages", new {mouseID = Model.Mouse.MouseID })'">
             <p>Transfer </p><i class="material-icons" style="font-size: 14pt;">adb</i>
         </button>
-        <button class="custBtn" onclick="location.href='@Url.Action("Edit", "Mice", new {id = Model.Mouse.MouseID })'">
+        <button class="btn custBtn" onclick="location.href='@Url.Action("Edit", "Mice", new {id = Model.Mouse.MouseID })'">
             <p>Edit </p><i class="material-icons" style="font-size: 14pt;">adb</i>
         </button>
-        <button class="custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.Mouse.LineID })'">
+        <button class="btn custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.Mouse.LineID })'">
             <p>Back to Line </p>
         </button>
-        <button class="custBtn" onclick="location.href='@Url.Action("Delete", "Mice", new {id = Model.Mouse.MouseID })'">
+        <button class="btn custBtn" onclick="location.href='@Url.Action("Delete", "Mice", new {id = Model.Mouse.MouseID })'">
             <p>Delete </p><i class="material-icons" style="font-size: 14pt;">adb</i>
         </button>
     </div>
