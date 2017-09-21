@@ -120,6 +120,18 @@ canvas {
 .custBtn p {
     display: inline;
 }
+.custBtn {
+    background-color: #842927;
+    color: lightgray;
+    border: none;
+    border-radius: 5px; 
+    -webkit-box-shadow: 5px 5px 15px 0px #2B6265;
+    -moz-box-shadow: 5px 5px 15px 0px #2B6265;
+    box-shadow: 5px 5px 15px 0px #2B6265;
+}
+.custBtn:hover {
+    color: white;
+}
 
 .custBtn span,
 .custBtn img {

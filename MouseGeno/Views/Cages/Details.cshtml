@@ -231,7 +231,7 @@
                         <option value="10" name="numOfPups">10</option>
                     </select>
                     <input type="hidden" value="@Model.Cage.CageID" name="cageID" />
-                    <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born" />
+                    <input type="submit" asp-controller="Mice" asp-action="NewLitter" value="New Litter Born" class="btn custBtn"/>
                 </form>
             }
             <br />
@@ -243,11 +243,11 @@
                        <form>
                            <input type="hidden" value="@Model.Cage.CageID" name="cageID" />
                            <input type="hidden" value="@Model.Actions.Single(a => a.Name == "Weigh Mouse").TaskTypeID" name="taskID" />
-                           <input type="submit" asp-controller="TaskTypes" asp-action="TaskOnCage" value="Weigh Mice in Cage" class="custBtn"/>
+                           <input type="submit" asp-controller="TaskTypes" asp-action="TaskOnCage" value="Weigh Mice in Cage" class="btn custBtn"/>
                        </form>
                     </div>
                     <div class="col-md-2 container">
-                        <button class="custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.MiceInCage[0].LineID })'">
+                        <button class="btn custBtn" onclick="location.href='@Url.Action("Details", "Lines", new {id = Model.MiceInCage[0].LineID })'">
                             <p>Back to Line </p>
                         </button>
                     </div>
