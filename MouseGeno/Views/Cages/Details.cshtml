@@ -120,12 +120,6 @@
                             Birth
                         </th>
                         <th>
-                            Mom
-                        </th>
-                        <th>
-                            Dad
-                        </th>
-                        <th>
                             PK1
                         </th>
                         <th>
@@ -150,7 +144,7 @@
                             <td>
                                 @if (mouse.ToeClip == null)
                                 {
-                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-plus"></span></a>
                                 }
                                 else
                                 {
@@ -170,12 +164,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => mouse.Birth)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => mouse.Mom.EarTag)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => mouse.Dad.EarTag)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => mouse.PK1.ShortHand)

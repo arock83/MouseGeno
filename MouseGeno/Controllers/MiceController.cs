@@ -82,7 +82,7 @@ namespace MouseGeno.Controllers
                 mouse.PK2 = await _context.GeneExpression.SingleAsync(g => g.GeneExpressionID == mouse.PK2ID);
                 _context.Add(mouse);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Lines", new { id = mouse.LineID });
             }
             ViewData["LineID"] = new SelectList(_context.Line, "LineID", "Name", mouse.LineID);
             ViewData["PK1ID"] = new SelectList(_context.GeneExpression, "GeneExpressionID", "ShortHand", mouse.PK1ID);
