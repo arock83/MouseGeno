@@ -146,9 +146,9 @@
                 @foreach (Cage cage in Model.UsedStandardCages)
                 {
                     <div class="col-md-2">
-                        <form asp-action="CageAssign" id="cageForm">
+                        <form asp-action="ExecuteCageAssign" id="cageForm">
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
-                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@Model.CurrentCage.CageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
                             <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
@@ -166,9 +166,9 @@
                 @foreach (Cage cage in Model.UsedBreederCages)
                 {
                     <div class="col-md-2">
-                        <form asp-action="CageAssign" id="cageForm">
+                        <form asp-action="ExecuteCageAssign" id="cageForm">
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
-                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@Model.CurrentCage.CageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
                             <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
@@ -186,9 +186,9 @@
                 @foreach (Cage cage in Model.NotUsedStandardCages)
                 {
                     <div class="col-md-2">
-                        <form asp-action="CageAssign" id="cageForm">
+                        <form asp-action="ExecuteCageAssign" id="cageForm">
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
-                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@Model.CurrentCage.CageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
                             <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>
@@ -206,9 +206,9 @@
                 @foreach (Cage cage in Model.NotUsedBreederCages)
                 {
                     <div class="col-md-2">
-                        <form asp-action="CageAssign" id="cageForm">
+                        <form asp-action="ExecuteCageAssign" id="cageForm">
                             <input type="hidden" value="@Model.Mouse.MouseID" asp-for="MouseID" />
-                            <input type="hidden" value="@Model.CurrentCageID" asp-for="CurrentCageID" />
+                            <input type="hidden" value="@Model.CurrentCage.CageID" asp-for="CurrentCageID" />
                             <input type="hidden" value="@cage.CageID" asp-for="NewCageID" />
                             <input type="submit" value="@cage.CageNumber" class="btn custBtn" />
                         </form>

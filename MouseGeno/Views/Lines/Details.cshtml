@@ -31,7 +31,6 @@
                     <a asp-controller="Cages" asp-action="Details" asp-route-id="@cage.CageID">
                         <p>@cage.CageNumber</p>
                     </a>
-                    <br />
                 }
             }
 
@@ -83,7 +82,7 @@
                             <td>
                                 @if (mouse.ToeClip == null)
                                 {
-                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="mouse.MouseID">[Assign]</a>
+                                    <a asp-controller="Mice" asp-action="Edit" asp-route-id="@mouse.MouseID"><span class="glyphicon glyphicon-plus"></span></a>
                                 }
                                 else
                                 {
@@ -106,7 +105,7 @@
                             <td>
                                 @if (mouse.MouseCages.Count() == 0 || mouse.MouseCages.All(mc => mc.EndDate != null))
                                 {
-                                    <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID">[Assign]</a>
+                                    <a asp-controller="Cages" asp-action="CageAssign" asp-route-mouseID="@mouse.MouseID"><span class="glyphicon glyphicon-plus"></span></a>
                                 }
                                 else
                                 {

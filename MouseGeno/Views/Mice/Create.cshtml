@@ -25,8 +25,8 @@
                 <div class="form-group">
                     <label asp-for="Sex" class="control-label"></label>
                     <select asp-for="Sex" class="form-control" asp-items="ViewBag.Sex">
-                        <option asp-for="Sex" asp-value="M">&#9794; M </option>
-                        <option asp-for="Sex" asp-value="F">&#9792; F </option>
+                        <option asp-for="Sex" value="M">&#9794; M </option>
+                        <option asp-for="Sex" value="F">&#9792; F </option>
                     </select>
                     @*<input asp-for="Sex" class="form-control" />*@
                     <span asp-validation-for="Sex" class="text-danger"></span>
